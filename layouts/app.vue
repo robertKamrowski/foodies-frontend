@@ -1,13 +1,17 @@
 <template>
   <VApp>
+    <VAppBar/>
+    <VNavigationDrawer/>
     <VMain>
-      <Nuxt/>
+      <VContainer>
+        <Nuxt/>
+      </VContainer>
     </VMain>
   </VApp>
 </template>
 
 <script lang="ts">
-
+export default {}
 </script>
 
 <style scoped>
