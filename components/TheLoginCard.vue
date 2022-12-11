@@ -4,13 +4,14 @@
       <h1 class="text-h3 font-weight-bold">Logowanie</h1>
     </VCardTitle>
     <VCardText>
-      <VForm id="login-form" @submit.prevent="handleLogin">
+      <VForm id="login-form" @submit.prevent="$emit('onLogin', credentials)">
         <VTextField
           v-model="credentials.username"
           label="Login"
           append-icon="mdi-login"
           hint="Wpisz login"
           outlined
+          dense
           rounded
         />
         <VTextField
@@ -21,6 +22,7 @@
           hint="Wpisz hasło"
           outlined
           rounded
+          dense
           clearable
         />
       </VForm>
@@ -45,15 +47,10 @@ export default {
     return {
       credentials: {
         username: '',
-        password: '',
-      },
+        password: ''
+      }
     }
-  },
-  methods: {
-    handleLogin() {
-      console.log(this.credentials)
-    },
-  },
+  }
 }
 </script>
 

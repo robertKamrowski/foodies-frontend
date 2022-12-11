@@ -6,10 +6,9 @@
 
 <script>
 export default {
-  name: 'AppPage'
+  name: 'AppPage',
+  middleware: 'auth'
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -1,19 +1,19 @@
 <template>
   <VApp>
-    <VAppBar/>
-    <VNavigationDrawer/>
+    <VAppBar />
+    <VNavigationDrawer />
     <VMain>
       <VContainer>
-        <Nuxt/>
+        <Nuxt />
       </VContainer>
     </VMain>
   </VApp>
 </template>
 
-<script lang="ts">
-export default {}
+<script>
+export default {
+  name: 'AppLayout'
+}
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
