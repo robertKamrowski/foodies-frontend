@@ -33,6 +33,9 @@
     <VCardActions>
       <VRow>
         <VCol sm="6">
+          <VBtn form="login-form" type="submit" block> Zaloguj</VBtn>
+        </VCol>
+        <VCol sm="6">
           <VDialog :max-width="480">
             <template #activator="{ on, attrs }">
               <VBtn block outlined v-bind="attrs" v-on="on"> Utwórz konto</VBtn>
@@ -75,9 +78,6 @@
               </VCardActions>
             </VCard>
           </VDialog>
-        </VCol>
-        <VCol sm="6">
-          <VBtn form="login-form" type="submit" block> Zaloguj</VBtn>
         </VCol>
       </VRow>
     </VCardActions>
