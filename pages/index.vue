@@ -1,14 +1,11 @@
 <template>
-  <VContainer>
-    <h1 class="text-h2">hehe jakiś tekst</h1>
-  </VContainer>
+  <VContainer> mój plan</VContainer>
 </template>
 
 <script>
 export default {
-  name: 'AppPage',
-  layout: 'app',
-  middleware: 'auth'
+  name: 'MyPlanPage',
+  layout: 'app'
 }
 </script>
 

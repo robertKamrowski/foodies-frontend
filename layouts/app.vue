@@ -6,7 +6,7 @@
       <VAppBarNavIcon class="d-lg-none" @click="toggleSidebar" />
     </VAppBar>
     <VNavigationDrawer v-model="sidebarOpen" app clipped class="pt-8 px-6">
-      nawigacja
+      <SidebarContent />
     </VNavigationDrawer>
     <VMain>
       <Nuxt />
@@ -17,6 +17,7 @@
 <script>
 export default {
   name: 'AppLayout',
+  middleware: 'auth',
   data: () => ({
     sidebarOpen: null
   }),
