@@ -1,14 +1,21 @@
 <template>
-  <VList nav>
-    <VListItem v-for="{ text, to, icon } in links" :key="text" :to="to" nuxt>
-      <VListItemIcon>
-        <VIcon v-text="icon" />
-      </VListItemIcon>
-      <VListItemContent>
-        <VListItemTitle v-text="text" />
-      </VListItemContent>
-    </VListItem>
-  </VList>
+  <div class="d-flex flex-column justify-space-between fill-height">
+    <VList nav>
+      <VListItem v-for="{ text, to, icon } in links" :key="text" :to="to" nuxt>
+        <VListItemIcon>
+          <VIcon v-text="icon" />
+        </VListItemIcon>
+        <VListItemContent>
+          <VListItemTitle v-text="text" />
+        </VListItemContent>
+      </VListItem>
+    </VList>
+    <div>
+      <VBtn class="mr-4" color="error" outlined block @click="handleLogout">
+        Wyloguj
+      </VBtn>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -42,7 +49,12 @@ export default {
         icon: 'mdi-lightbulb-on'
       }
     ]
-  })
+  }),
+  methods: {
+    async handleLogout() {
+      await this.$auth.logout()
+    }
+  }
 }
 </script>
 
