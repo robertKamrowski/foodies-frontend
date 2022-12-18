@@ -1,11 +1,22 @@
 <template>
-  <VContainer> shopping list page there</VContainer>
+  <VContainer>
+    <PageHeader
+      :title="pageHeaderConfig.title"
+      :description="pageHeaderConfig.description"
+    />
+  </VContainer>
 </template>
 
 <script>
 export default {
   name: 'ShoppingListPage',
-  layout: 'app'
+  layout: 'app',
+  data: () => ({
+    pageHeaderConfig: {
+      title: 'Lista zakupów',
+      description: 'Zrób listę zakupów'
+    }
+  })
 }
 </script>
 

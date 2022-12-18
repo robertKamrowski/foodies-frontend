@@ -1,11 +1,22 @@
 <template>
-  <VContainer> calculator page there</VContainer>
+  <VContainer>
+    <PageHeader
+      :title="pageHeaderConfig.title"
+      :description="pageHeaderConfig.description"
+    />
+  </VContainer>
 </template>
 
 <script>
 export default {
   name: 'CalculatorPage',
-  layout: 'app'
+  layout: 'app',
+  data: () => ({
+    pageHeaderConfig: {
+      title: 'Kalkulator kalorii',
+      description: 'Poznaj kalkulator kalorii'
+    }
+  })
 }
 </script>
 

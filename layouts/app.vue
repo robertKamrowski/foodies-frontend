@@ -2,13 +2,13 @@
   <VApp>
     <VAppBar app class="px-6" clipped-left>
       <VSpacer />
-      <VBtn class="mr-4" outlined @click="handleLogout"> Wyloguj </VBtn>
+      <VBtn class="mr-4" outlined @click="handleLogout"> Wyloguj</VBtn>
       <VAppBarNavIcon class="d-lg-none" @click="toggleSidebar" />
     </VAppBar>
     <VNavigationDrawer v-model="sidebarOpen" app clipped class="pt-8 px-6">
       <SidebarContent />
     </VNavigationDrawer>
-    <VMain>
+    <VMain class="mt-4 mx-4 mx-lg-8">
       <Nuxt />
     </VMain>
   </VApp>

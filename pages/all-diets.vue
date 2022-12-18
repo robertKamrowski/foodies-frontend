@@ -1,11 +1,22 @@
 <template>
-  <VContainer> all diets page content</VContainer>
+  <VContainer>
+    <PageHeader
+      :title="pageHeaderConfig.title"
+      :description="pageHeaderConfig.description"
+    />
+  </VContainer>
 </template>
 
 <script>
 export default {
   name: 'AllDietsPage',
-  layout: 'app'
+  layout: 'app',
+  data: () => ({
+    pageHeaderConfig: {
+      title: 'Wszystkie diety',
+      description: 'Poznaj wszystkie diety'
+    }
+  })
 }
 </script>
 

@@ -1,11 +1,22 @@
 <template>
-  <VContainer> mój plan</VContainer>
+  <VContainer>
+    <PageHeader
+      :title="pageHeaderConfig.title"
+      :description="pageHeaderConfig.description"
+    />
+  </VContainer>
 </template>
 
 <script>
 export default {
   name: 'MyPlanPage',
-  layout: 'app'
+  layout: 'app',
+  data: () => ({
+    pageHeaderConfig: {
+      title: 'Mój plan',
+      description: 'Poznaj swój super plan'
+    }
+  })
 }
 </script>
 
