@@ -27,9 +27,19 @@ export default {
         icon: 'mdi-calculator'
       },
       {
+        text: 'Lista zakupów',
+        to: '/shopping-list',
+        icon: 'mdi-basket'
+      },
+      {
         text: 'Wszystkie diety',
         to: '/all-diets',
         icon: 'mdi-food-apple-outline'
+      },
+      {
+        text: 'Porady',
+        to: '/tips',
+        icon: 'mdi-lightbulb-on'
       }
     ]
   })
