@@ -1,9 +1,10 @@
 <template>
   <VContainer>
     <PageHeader
-      :title="pageHeaderConfig.title"
       :description="pageHeaderConfig.description"
+      :title="pageHeaderConfig.title"
     />
+    {{ allPlans }}
   </VContainer>
 </template>
 
@@ -11,6 +12,23 @@
 export default {
   name: 'AllDietsPage',
   layout: 'app',
+  async asyncData({ $axios, $getAuthHeader, store }) {
+    try {
+      const { data: allPlans } = await $axios.$get('/diet-plan', $getAuthHeader)
+      return {
+        allPlans
+      }
+    } catch ({ response }) {
+      store.commit('manageAlert', {
+        show: true,
+        type: 'error',
+        text: response.data.message
+      })
+      return {
+        allPlans: []
+      }
+    }
+  },
   data: () => ({
     pageHeaderConfig: {
       title: 'Wszystkie diety',
