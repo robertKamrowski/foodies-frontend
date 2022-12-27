@@ -14,6 +14,11 @@
         transition="scroll-x-transition"
         text
       >
+        <template #close>
+          <VBtn icon outlined color="grey" @click="$store.commit('closeAlert')">
+            <VIcon>mdi-close</VIcon>
+          </VBtn>
+        </template>
         {{ alert.text }}
       </VAlert>
       <Nuxt />
