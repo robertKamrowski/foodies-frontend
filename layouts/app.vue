@@ -8,18 +8,31 @@
       <SidebarContent />
     </VNavigationDrawer>
     <VMain class="mt-4 mx-4 mx-lg-8">
+      <VAlert
+        v-show="alert.show"
+        :type="alert.type"
+        transition="scroll-x-transition"
+        text
+      >
+        {{ alert.text }}
+      </VAlert>
       <Nuxt />
     </VMain>
   </VApp>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'AppLayout',
   middleware: 'auth',
   data: () => ({
     sidebarOpen: null
   }),
+  computed: {
+    ...mapState(['alert'])
+  },
   methods: {
     toggleSidebar() {
       this.sidebarOpen = !this.sidebarOpen
@@ -28,4 +41,4 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped lang="scss"></style>

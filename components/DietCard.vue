@@ -29,7 +29,9 @@
       </ul>
     </VCardText>
     <VCardActions>
-      <VBtn block color="green" outlined> Wybierz</VBtn>
+      <VBtn block color="green" outlined @click="assignDietPlanToUser">
+        Wybierz
+      </VBtn>
     </VCardActions>
   </VCard>
 </template>
@@ -38,6 +40,10 @@
 export default {
   name: 'DietCard',
   props: {
+    _id: {
+      type: String,
+      required: true
+    },
     name: {
       type: String,
       required: true
@@ -80,6 +86,31 @@ export default {
     },
     dailyMealsMessage() {
       return `${this.dailyMeals} posiłki dziennie`
+    }
+  },
+  methods: {
+    async assignDietPlanToUser() {
+      const requestBody = {
+        dietPlanId: this._id
+      }
+      try {
+        const { message } = await this.$axios.$post(
+          '/assign-diet-plan',
+          requestBody,
+          this.$getAuthHeader
+        )
+        this.$store.commit('manageAlert', {
+          show: true,
+          type: 'success',
+          text: message
+        })
+      } catch ({ response }) {
+        this.$store.commit('manageAlert', {
+          show: true,
+          type: 'error',
+          text: response.data.message
+        })
+      }
     }
   }
 }
