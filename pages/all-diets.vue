@@ -4,7 +4,18 @@
       :description="pageHeaderConfig.description"
       :title="pageHeaderConfig.title"
     />
-    {{ allPlans }}
+    <VRow>
+      <VCol
+        v-for="plan in allPlans"
+        :key="plan.name"
+        cols="12"
+        lg="3"
+        md="4"
+        sm="6"
+      >
+        <DietCard v-bind="plan" />
+      </VCol>
+    </VRow>
   </VContainer>
 </template>
 
@@ -32,7 +43,7 @@ export default {
   data: () => ({
     pageHeaderConfig: {
       title: 'Wszystkie diety',
-      description: 'Poznaj wszystkie diety'
+      description: 'Wybieraj dowolne posiłki z diety'
     }
   })
 }
