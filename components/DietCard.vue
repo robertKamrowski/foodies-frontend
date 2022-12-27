@@ -99,6 +99,7 @@ export default {
           requestBody,
           this.$getAuthHeader
         )
+        await this.$auth.fetchUser()
         this.$store.commit('manageAlert', {
           show: true,
           type: 'success',
