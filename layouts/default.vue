@@ -17,7 +17,10 @@
 
 <script>
 import { mapState } from 'vuex'
+import Vue from 'vue'
+import closeAlertOnRedirect from '~/mixins/closeAlertOnRedirect'
 
+Vue.mixin(closeAlertOnRedirect)
 export default {
   name: 'DefaultLayout',
   computed: {
