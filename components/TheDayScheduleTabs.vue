@@ -8,11 +8,27 @@
     </VTabs>
     <VDivider />
     <!--  Tabs content -->
-    <VTabsItems v-model="tab" vertical>
-      <VTabItem v-for="({ content }, index) in items" :key="index">
-        <VCard class="mx-6 my-4" flat>
-          {{ content }}
-        </VCard>
+    <VTabsItems v-if="$auth.user.dietPlan" v-model="tab" vertical>
+      <TheAddRecipeBtn :selected-meals="3" />
+      <VTabItem v-for="{ content } in items" :key="content">
+        <VSheet class="px-6 py-4">
+          <VRow>
+            <VCol
+              v-for="recipe in $auth.user.dietPlan.recipes"
+              :key="recipe._id"
+              cols="12"
+              lg="3"
+              md="4"
+              sm="6"
+            >
+              <RecipeCard
+                :ingredients="recipe.ingredients"
+                :steps="recipe.steps"
+                :title="recipe.title"
+              />
+            </VCol>
+          </VRow>
+        </VSheet>
       </VTabItem>
     </VTabsItems>
   </VCard>
@@ -33,6 +49,7 @@ export default {
       { name: 'Niedziela', content: '6 content' }
     ]
   }),
+  computed: {},
   created() {
     this.tab = new Date().getDay() - 1
   }
