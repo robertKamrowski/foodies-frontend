@@ -1,13 +1,14 @@
 <template>
   <VContainer>
     <PageHeader
-      :title="pageHeaderConfig.title"
       :description="pageHeaderConfig.description"
+      :title="pageHeaderConfig.title"
     />
     {{ $auth.user }}
     <VBtn v-if="$auth.user.dietPlan" @click="removeDietPlanFromUser">
       Wypisz się z planu
     </VBtn>
+    <TheDayScheduleTabs />
   </VContainer>
 </template>
 
