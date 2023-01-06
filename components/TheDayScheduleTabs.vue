@@ -8,8 +8,8 @@
     </VTabs>
     <VDivider />
     <!--  Tabs content -->
-    <VTabsItems v-if="$auth.user.dietPlan" v-model="tab" vertical>
-      <TheAddRecipeBtn :selected-meals="3" />
+    <VTabsItems v-if="$auth.user.dietPlan" v-model="tab">
+      <TheRecipesDialogWithActivatorBtn :selected-meals="3" />
       <VTabItem v-for="{ content } in items" :key="content">
         <VSheet class="px-6 py-4">
           <VRow>
@@ -17,14 +17,14 @@
               v-for="recipe in $auth.user.dietPlan.recipes"
               :key="recipe._id"
               cols="12"
-              lg="3"
-              md="4"
+              lg="4"
               sm="6"
             >
               <RecipeCard
                 :ingredients="recipe.ingredients"
                 :steps="recipe.steps"
                 :title="recipe.title"
+                :makro="recipe.makro"
               />
             </VCol>
           </VRow>

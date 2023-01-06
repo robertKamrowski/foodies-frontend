@@ -1,27 +1,32 @@
 <template>
-  <VCard class="d-flex flex-column fill-height" min-height="380" rounded>
-    <VCardTitle class="card-title">
+  <VCard class="recipe-card d-flex flex-column fill-height" rounded>
+    <VCardTitle class="recipe-card__title">
       {{ title }}
+      <VBtn class="ml-auto" color="error" outlined fab small>
+        <VIcon>mdi-delete</VIcon>
+      </VBtn>
     </VCardTitle>
     <VDivider />
+    <VCardSubtitle class="font-weight-bold text-decoration-underline">
+      Składniki
+    </VCardSubtitle>
     <VCardText>
-      <ul>
-        <li v-for="(step, index) in steps" :key="index">
-          {{ step }}
-        </li>
-      </ul>
-    </VCardText>
-    <VDivider />
-    <VCardText>
-      <ul>
+      <ul class="recipe-card__ingredients-list">
         <li v-for="(ingredient, index) in ingredients" :key="index">
           {{ ingredient }}
         </li>
       </ul>
     </VCardText>
-    <VCardActions class="mt-auto">
-      <VBtn block color="error">Usuń</VBtn>
-    </VCardActions>
+    <VCardSubtitle class="font-weight-bold text-decoration-underline">
+      Przygotowanie
+    </VCardSubtitle>
+    <VCardText>
+      <ol>
+        <li v-for="(step, index) in steps" :key="index">
+          {{ step }}
+        </li>
+      </ol>
+    </VCardText>
   </VCard>
 </template>
 
@@ -46,7 +51,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.card-title {
-  word-break: break-word;
+.recipe-card {
+  &__title {
+    word-break: break-word;
+  }
+
+  &__ingredients-list {
+    columns: 2;
+  }
 }
 </style>

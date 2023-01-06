@@ -1,6 +1,6 @@
 <template>
   <VBtn :disabled="btnDisabled" class="add-recipe-btn" color="primary">
-    Dodaj przepis do diety
+    Dodaj przepis do dnia
   </VBtn>
 </template>
 
