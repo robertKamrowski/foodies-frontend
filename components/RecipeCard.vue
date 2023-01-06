@@ -1,10 +1,7 @@
 <template>
-  <VCard class="recipe-card d-flex flex-column fill-height" rounded>
+  <VCard class="recipe-card d-flex flex-column fill-height" outlined rounded>
     <VCardTitle class="recipe-card__title">
       {{ title }}
-      <VBtn class="ml-auto" color="error" outlined fab small>
-        <VIcon>mdi-delete</VIcon>
-      </VBtn>
     </VCardTitle>
     <VDivider />
     <VCardSubtitle class="font-weight-bold text-decoration-underline">
@@ -27,6 +24,13 @@
         </li>
       </ol>
     </VCardText>
+    <VSpacer />
+    <VCardActions>
+      <VSpacer />
+      <VBtn :color="actionBtnIconColor" fab outlined small>
+        <VIcon>{{ actionBtnIcon }}</VIcon>
+      </VBtn>
+    </VCardActions>
   </VCard>
 </template>
 
@@ -34,6 +38,10 @@
 export default {
   name: 'RecipeCard',
   props: {
+    id: {
+      type: String,
+      required: true
+    },
     title: {
       type: String,
       required: true
@@ -45,6 +53,19 @@ export default {
     ingredients: {
       type: Array,
       required: true
+    },
+    actionType: {
+      type: String,
+      default: 'delete',
+      validator: (value) => ['add', 'delete'].includes(value)
+    }
+  },
+  computed: {
+    actionBtnIconColor() {
+      return this.actionType === 'add' ? 'success' : 'error'
+    },
+    actionBtnIcon() {
+      return this.actionType === 'add' ? 'mdi-plus' : 'mdi-delete'
     }
   }
 }
