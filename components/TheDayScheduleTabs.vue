@@ -27,6 +27,7 @@
                 :makro="makro"
                 :steps="steps"
                 :title="title"
+                show-done-btn
               />
             </VCol>
           </VRow>

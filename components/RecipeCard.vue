@@ -30,17 +30,43 @@
       </ol>
     </VCardText>
     <VSpacer />
-    <VCardActions>
+    <VCardActions class="px-4">
+      <VTooltip top>
+        <template #activator="{ on, attrs }">
+          <VBtn
+            v-if="showDoneBtn"
+            :outlined="!isDone"
+            color="success"
+            fab
+            small
+            v-bind="attrs"
+            @click="onDoneBtnClick"
+            v-on="on"
+          >
+            <VIcon>mdi-check</VIcon>
+          </VBtn>
+        </template>
+        <span>
+          {{ doneBtnTooltip }}
+        </span>
+      </VTooltip>
       <VSpacer />
-      <VBtn
-        :color="actionBtnIconColor"
-        fab
-        outlined
-        small
-        @click="addOrRemoveRecipeFromSchedule"
-      >
-        <VIcon>{{ actionBtnIcon }}</VIcon>
-      </VBtn>
+      <VTooltip top>
+        <template #activator="{ on, attrs }">
+          <VBtn
+            :color="addOrRemoveBtnColor"
+            :outlined="!addOrRemoveBtnOutlined"
+            fab
+            small
+            v-bind="attrs"
+            @click="addOrRemoveRecipeFromSchedule"
+            v-on="on"
+          >
+            <VIcon>{{ addOrRemoveBtnIcon }}</VIcon>
+          </VBtn>
+        </template>
+        <span> {{ addOrRemoveBtnTooltip }} </span>
+      </VTooltip>
     </VCardActions>
   </VCard>
 </template>
@@ -49,6 +75,10 @@
 export default {
   name: 'RecipeCard',
   props: {
+    showDoneBtn: {
+      type: Boolean,
+      default: false
+    },
     day: {
       type: String,
       required: true
@@ -73,20 +103,39 @@ export default {
       type: String,
       default: 'delete',
       validator: (value) => ['add', 'delete'].includes(value)
+    },
+    selectedInDay: {
+      type: Boolean,
+      default: false
     }
   },
   data: () => ({
-    loading: false
+    loading: false,
+    isDone: false
   }),
   computed: {
-    actionBtnIconColor() {
+    addOrRemoveBtnColor() {
       return this.actionType === 'add' ? 'success' : 'error'
     },
-    actionBtnIcon() {
+    addOrRemoveBtnIcon() {
       return this.actionType === 'add' ? 'mdi-plus' : 'mdi-delete'
+    },
+    addOrRemoveBtnOutlined() {
+      return this.actionType === 'add' && this.selectedInDay
+    },
+    addOrRemoveBtnTooltip() {
+      return this.actionType === 'add'
+        ? 'Dodaj przepis do dnia'
+        : 'Usuń przepis z dnia'
+    },
+    doneBtnTooltip() {
+      return `Oznacz przepis jako ${this.isDone ? 'nie' : ''} zrobiony`
     }
   },
   methods: {
+    onDoneBtnClick() {
+      this.isDone = !this.isDone
+    },
     async addOrRemoveRecipeFromSchedule() {
       const { actionType, id, day } = this
       const url = `${actionType === 'add' ? 'add-to' : 'remove-from'}-schedule`
