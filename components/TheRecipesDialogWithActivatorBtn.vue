@@ -4,7 +4,7 @@
       <VBtn
         :disabled="btnDisabled"
         block
-        color="primary"
+        color="success"
         tile
         v-bind="attrs"
         v-on="on"
