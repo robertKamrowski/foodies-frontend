@@ -1,5 +1,10 @@
 <template>
-  <VCard class="recipe-card d-flex flex-column fill-height" outlined rounded>
+  <VCard
+    :loading="loading"
+    class="recipe-card d-flex flex-column fill-height"
+    outlined
+    rounded
+  >
     <VCardTitle class="recipe-card__title">
       {{ title }}
     </VCardTitle>
@@ -27,7 +32,13 @@
     <VSpacer />
     <VCardActions>
       <VSpacer />
-      <VBtn :color="actionBtnIconColor" fab outlined small>
+      <VBtn
+        :color="actionBtnIconColor"
+        fab
+        outlined
+        small
+        @click="addOrRemoveRecipeFromSchedule"
+      >
         <VIcon>{{ actionBtnIcon }}</VIcon>
       </VBtn>
     </VCardActions>
@@ -38,6 +49,10 @@
 export default {
   name: 'RecipeCard',
   props: {
+    day: {
+      type: String,
+      required: true
+    },
     id: {
       type: String,
       required: true
@@ -60,12 +75,47 @@ export default {
       validator: (value) => ['add', 'delete'].includes(value)
     }
   },
+  data: () => ({
+    loading: false
+  }),
   computed: {
     actionBtnIconColor() {
       return this.actionType === 'add' ? 'success' : 'error'
     },
     actionBtnIcon() {
       return this.actionType === 'add' ? 'mdi-plus' : 'mdi-delete'
+    }
+  },
+  methods: {
+    async addOrRemoveRecipeFromSchedule() {
+      const { actionType, id, day } = this
+      const url = `${actionType === 'add' ? 'add-to' : 'remove-from'}-schedule`
+
+      try {
+        this.loading = true
+        const { message } = await this.$axios.$post(
+          url,
+          {
+            recipeId: id,
+            day
+          },
+          this.$getAuthHeader
+        )
+        this.loading = false
+        await this.$auth.fetchUser()
+        this.$store.commit('manageSnackbar', {
+          show: true,
+          text: message,
+          type: 'success'
+        })
+      } catch ({ response }) {
+        this.loading = false
+        this.$store.commit('manageSnackbar', {
+          show: true,
+          text: response.data.message,
+          type: 'error'
+        })
+      }
     }
   }
 }

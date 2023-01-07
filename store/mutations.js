@@ -9,5 +9,12 @@ export default {
   },
   closeAlert: (state) => {
     state.alert.show = false
-  }
+  },
+
+  // Snackbar management
+  manageSnackbar: (state, payload) => {
+    state.snackbar = payload
+  },
+
+  closeSnackbar: (state) => (state.snackbar.show = false)
 }

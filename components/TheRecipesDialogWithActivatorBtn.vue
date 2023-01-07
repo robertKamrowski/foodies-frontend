@@ -36,18 +36,21 @@
         <VCardText class="pt-4">
           <VRow>
             <VCol
-              v-for="recipe in selectedDiet('recipes')"
-              :key="recipe._id"
+              v-for="{ _id, ingredients, steps, title } in selectedDiet(
+                'recipes'
+              )"
+              :key="_id"
               cols="12"
               lg="4"
               sm="6"
             >
               <RecipeCard
-                :id="recipe._id"
-                :ingredients="recipe.ingredients"
+                :id="_id"
+                :day="day"
+                :ingredients="ingredients"
                 :show-delete-btn="false"
-                :steps="recipe.steps"
-                :title="recipe.title"
+                :steps="steps"
+                :title="title"
                 action-type="add"
               />
             </VCol>
@@ -60,8 +63,12 @@
 
 <script>
 export default {
-  name: 'TheAddRecipeBtn',
+  name: 'TheRecipesDialogWithActivatorBtn',
   props: {
+    day: {
+      type: String,
+      required: true
+    },
     selectedMeals: {
       type: Number,
       required: true

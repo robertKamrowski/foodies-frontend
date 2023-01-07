@@ -1,30 +1,32 @@
 <template>
-  <VCard>
+  <VCard v-if="$auth.user.dietPlan">
     <!--  Tabs -->
     <VTabs v-model="tab" center-active centered show-arrows>
       <VTab v-for="({ name }, index) in items" :key="`${name}-${index}`">
         {{ name }}
       </VTab>
     </VTabs>
-    <TheRecipesDialogWithActivatorBtn :selected-meals="2" />
+    <TheRecipesDialogWithActivatorBtn :day="activeDay" :selected-meals="2" />
     <!--  Tabs content -->
-    <VTabsItems v-if="$auth.user.dietPlan" v-model="tab" vertical>
+    <VTabsItems v-model="tab" vertical>
       <VTabItem v-for="{ content } in items" :key="content">
         <VSheet class="px-6 py-4">
           <VRow>
             <VCol
-              v-for="recipe in $auth.user.dietSchedule[content]"
-              :key="recipe._id"
+              v-for="{ _id, ingredients, makro, steps, title } in $auth.user
+                .dietSchedule[content]"
+              :key="_id"
               cols="12"
               lg="4"
               sm="6"
             >
               <RecipeCard
-                :id="recipe._id"
-                :ingredients="recipe.ingredients"
-                :makro="recipe.makro"
-                :steps="recipe.steps"
-                :title="recipe.title"
+                :id="_id"
+                :day="content"
+                :ingredients="ingredients"
+                :makro="makro"
+                :steps="steps"
+                :title="title"
               />
             </VCol>
           </VRow>
@@ -38,6 +40,7 @@
 export default {
   name: 'TheDayScheduleTabs',
   data: () => ({
+    activeDay: '',
     tab: null,
     items: [
       { name: 'Poniedziałek', content: 'monday' },
@@ -49,6 +52,11 @@ export default {
       { name: 'Niedziela', content: 'sunday' }
     ]
   }),
+  watch: {
+    tab(currentValue) {
+      this.activeDay = this.items[currentValue].content
+    }
+  },
   created() {
     this.tab = new Date().getDay() - 1
   }

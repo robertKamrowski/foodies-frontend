@@ -21,6 +21,15 @@
         </template>
         {{ alert.text }}
       </VAlert>
+      <VSnackbar
+        :value="snackbar.show"
+        :color="snackbar.type"
+        top
+        :timeout="2000"
+        @input="onSnackbarHide"
+      >
+        {{ snackbar.text }}
+      </VSnackbar>
       <Nuxt />
     </VMain>
   </VApp>
@@ -36,11 +45,14 @@ export default {
     sidebarOpen: null
   }),
   computed: {
-    ...mapState(['alert'])
+    ...mapState(['alert', 'snackbar'])
   },
   methods: {
     toggleSidebar() {
       this.sidebarOpen = !this.sidebarOpen
+    },
+    onSnackbarHide() {
+      this.$store.commit('closeSnackbar')
     }
   }
 }
