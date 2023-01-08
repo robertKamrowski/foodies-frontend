@@ -3,11 +3,13 @@
     <PageHeader
       :description="pageHeaderConfig.description"
       :title="pageHeaderConfig.title"
-    />
-    <VBtn v-if="$auth.user.dietPlan" @click="removeDietPlanFromUser">
-      Wypisz się z planu
-    </VBtn>
-    <TheDayScheduleTabs v-if="$auth.user.dietPlan" />
+    >
+      <TheRemoveSelectedPlanBtn v-if="$auth.user.dietPlan" />
+    </PageHeader>
+    <template v-if="$auth.user.dietPlan">
+      <TheDailyDietStatus :day="day" />
+      <TheDayScheduleTabs @day-change="handleDayChange" />
+    </template>
   </VContainer>
 </template>
 
@@ -19,28 +21,12 @@ export default {
     pageHeaderConfig: {
       title: 'Mój plan',
       description: 'Poznaj swój super plan'
-    }
+    },
+    day: ''
   }),
   methods: {
-    async removeDietPlanFromUser() {
-      try {
-        const { message } = await this.$axios.$delete(
-          '/remove-diet-plan',
-          this.$getAuthHeader
-        )
-        await this.$auth.fetchUser()
-        this.$store.commit('manageAlert', {
-          show: true,
-          type: 'success',
-          text: message
-        })
-      } catch ({ response }) {
-        this.$store.commit('manageAlert', {
-          show: true,
-          type: 'error',
-          text: response.data.message
-        })
-      }
+    handleDayChange(value) {
+      this.day = value
     }
   }
 }

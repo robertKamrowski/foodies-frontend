@@ -1,7 +1,7 @@
 <template>
   <VCard>
     <!--  Tabs -->
-    <VTabs v-model="tab" center-active centered show-arrows>
+    <VTabs v-model="tab" center-active centered color="success" show-arrows>
       <VTab v-for="({ name }, index) in items" :key="`${name}-${index}`">
         {{ name }}
       </VTab>
@@ -56,6 +56,7 @@ export default {
   watch: {
     tab(currentValue) {
       this.activeDay = this.items[currentValue].content
+      this.$emit('day-change', this.activeDay)
     }
   },
   created() {
