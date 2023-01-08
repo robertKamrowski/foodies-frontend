@@ -52,7 +52,7 @@
                 :steps="steps"
                 :title="title"
                 action-type="add"
-                selected-in-day
+                card-in-dialog
               />
             </VCol>
           </VRow>

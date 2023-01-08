@@ -1,5 +1,6 @@
 <template>
   <VCard
+    :disabled="isDisabled"
     :loading="loading"
     class="recipe-card d-flex flex-column fill-height"
     outlined
@@ -102,6 +103,10 @@ export default {
       type: String,
       default: 'delete',
       validator: (value) => ['add', 'delete'].includes(value)
+    },
+    cardInDialog: {
+      type: Boolean,
+      default: false
     }
   },
   data: () => ({
@@ -122,6 +127,13 @@ export default {
     },
     doneBtnTooltip() {
       return `Oznacz przepis jako ${this.isDone ? 'nie' : ''} zrobiony`
+    },
+    isDisabled() {
+      return this.cardInDialog
+        ? this.$auth.user.dietSchedule[this.day].some(
+            (recipe) => recipe._id === this.id
+          )
+        : false
     }
   },
   methods: {
