@@ -1,18 +1,21 @@
 <template>
-  <VDialog max-width="1020" scrollable transition="dialog-bottom-transition">
-    <template #activator="{ on, attrs }">
-      <VBtn
-        :disabled="btnDisabled"
-        block
-        color="success"
-        tile
-        v-bind="attrs"
-        v-on="on"
-      >
-        Dodaj przepisy do dnia
-      </VBtn>
-    </template>
-    <template #default="dialog">
+  <div>
+    <VBtn
+      :disabled="allRecipesSelected"
+      block
+      color="success"
+      tile
+      @click="toggleDialog"
+    >
+      Dodaj przepisy do dnia -
+      {{ selectedDailyMeals }} / {{ dailyMeals }}
+    </VBtn>
+    <VDialog
+      v-model="dialog"
+      max-width="1020"
+      scrollable
+      transition="dialog-bottom-transition"
+    >
       <VCard>
         <VCardTitle class="mb-2 title">
           <span class="title__text">
@@ -20,11 +23,12 @@
             {{ selectedDiet('name') }} kcal
           </span>
           <VBtn
+            ref="close"
             class="title__close-btn"
             fab
             icon
             small
-            @click="dialog.value = false"
+            @click="toggleDialog"
           >
             <VIcon> mdi-close</VIcon>
           </VBtn>
@@ -58,8 +62,8 @@
           </VRow>
         </VCardText>
       </VCard>
-    </template>
-  </VDialog>
+    </VDialog>
+  </div>
 </template>
 
 <script>
@@ -69,20 +73,33 @@ export default {
     day: {
       type: String,
       required: true
-    },
-    selectedMeals: {
-      type: Number,
-      required: true
     }
   },
+  data: () => ({
+    dialog: false
+  }),
   computed: {
-    btnDisabled() {
-      return this.selectedMeals === this.$auth.user.dietPlan.dailyMeals
+    allRecipesSelected() {
+      return this.selectedDailyMeals === this.dailyMeals
+    },
+    dailyMeals() {
+      return this.$auth.user.dietPlan.dailyMeals
+    },
+    selectedDailyMeals() {
+      return this.$auth.user.dietSchedule[this.day].length
+    }
+  },
+  watch: {
+    allRecipesSelected(value) {
+      value && (this.dialog = false)
     }
   },
   methods: {
     selectedDiet(property) {
       return this.$auth.user.dietPlan[property]
+    },
+    toggleDialog() {
+      this.dialog = !this.dialog
     }
   }
 }

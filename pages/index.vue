@@ -7,7 +7,7 @@
     <VBtn v-if="$auth.user.dietPlan" @click="removeDietPlanFromUser">
       Wypisz się z planu
     </VBtn>
-    <TheDayScheduleTabs />
+    <TheDayScheduleTabs v-if="$auth.user.dietPlan" />
   </VContainer>
 </template>
 

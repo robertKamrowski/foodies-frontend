@@ -1,14 +1,14 @@
 <template>
-  <VCard v-if="$auth.user.dietPlan">
+  <VCard>
     <!--  Tabs -->
     <VTabs v-model="tab" center-active centered show-arrows>
       <VTab v-for="({ name }, index) in items" :key="`${name}-${index}`">
         {{ name }}
       </VTab>
     </VTabs>
-    <TheRecipesDialogWithActivatorBtn :day="activeDay" :selected-meals="2" />
+    <TheRecipesDialogWithActivatorBtn :day="activeDay" />
     <!--  Tabs content -->
-    <VTabsItems v-model="tab" vertical>
+    <VTabsItems v-model="tab">
       <VTabItem v-for="{ content } in items" :key="content">
         <VSheet class="px-6 py-4">
           <VRow>
