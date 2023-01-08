@@ -55,7 +55,6 @@
         <template #activator="{ on, attrs }">
           <VBtn
             :color="addOrRemoveBtnColor"
-            :outlined="!addOrRemoveBtnOutlined"
             fab
             small
             v-bind="attrs"
@@ -103,10 +102,6 @@ export default {
       type: String,
       default: 'delete',
       validator: (value) => ['add', 'delete'].includes(value)
-    },
-    selectedInDay: {
-      type: Boolean,
-      default: false
     }
   },
   data: () => ({
@@ -119,9 +114,6 @@ export default {
     },
     addOrRemoveBtnIcon() {
       return this.actionType === 'add' ? 'mdi-plus' : 'mdi-delete'
-    },
-    addOrRemoveBtnOutlined() {
-      return this.actionType === 'add' && this.selectedInDay
     },
     addOrRemoveBtnTooltip() {
       return this.actionType === 'add'

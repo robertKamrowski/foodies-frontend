@@ -41,16 +41,16 @@
 export default {
   name: 'TheDayScheduleTabs',
   data: () => ({
-    activeDay: '',
+    activeDay: 'monday',
     tab: null,
     items: [
+      { name: 'Niedziela', content: 'sunday' },
       { name: 'Poniedziałek', content: 'monday' },
       { name: 'Wtorek', content: 'tuesday' },
       { name: 'Środa', content: 'wednesday' },
       { name: 'Czwartek', content: 'thursday' },
       { name: 'Piątek', content: 'friday' },
-      { name: 'Sobota', content: 'saturday' },
-      { name: 'Niedziela', content: 'sunday' }
+      { name: 'Sobota', content: 'saturday' }
     ]
   }),
   watch: {
@@ -59,7 +59,7 @@ export default {
     }
   },
   created() {
-    this.tab = new Date().getDay() - 1
+    this.tab = new Date().getDay()
   }
 }
 </script>
