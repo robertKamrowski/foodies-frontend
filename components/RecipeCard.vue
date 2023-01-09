@@ -36,7 +36,7 @@
         <template #activator="{ on, attrs }">
           <VBtn
             v-if="showDoneBtn"
-            :outlined="!isDone"
+            :outlined="!isRecipeDone"
             color="success"
             fab
             small
@@ -110,8 +110,7 @@ export default {
     }
   },
   data: () => ({
-    loading: false,
-    isDone: false
+    loading: false
   }),
   computed: {
     addOrRemoveBtnColor() {
@@ -126,7 +125,14 @@ export default {
         : 'Usuń przepis z dnia'
     },
     doneBtnTooltip() {
-      return `Oznacz przepis jako ${this.isDone ? 'nie' : ''} zrobiony`
+      return `Oznacz przepis jako ${this.isRecipeDone ? 'nie' : ''} zrobiony`
+    },
+    isRecipeDone() {
+      return !this.cardInDialog
+        ? this.$auth.user.dietSchedule[this.day].find(
+            (recipe) => recipe._id === this.id
+          ).isDone
+        : null
     },
     isDisabled() {
       return this.cardInDialog
@@ -137,25 +143,34 @@ export default {
     }
   },
   methods: {
-    onDoneBtnClick() {
-      this.isDone = !this.isDone
+    // Toggle clicked recipe done
+    async onDoneBtnClick() {
+      const { id, day } = this
+      await this.makeApiCall('/toggle-recipe-done', {
+        recipeId: id,
+        day
+      })
     },
+    // Adds/removes recipe to/from schedule
     async addOrRemoveRecipeFromSchedule() {
       const { actionType, id, day } = this
       const url = `${actionType === 'add' ? 'add-to' : 'remove-from'}-schedule`
-
+      await this.makeApiCall(url, {
+        recipeId: id,
+        day
+      })
+    },
+    // Makes api call
+    async makeApiCall(apiUrl, data) {
       try {
         this.loading = true
         const { message } = await this.$axios.$post(
-          url,
-          {
-            recipeId: id,
-            day
-          },
+          apiUrl,
+          data,
           this.$getAuthHeader
         )
-        this.loading = false
         await this.$auth.fetchUser()
+        this.loading = false
         this.$store.commit('manageSnackbar', {
           show: true,
           text: message,

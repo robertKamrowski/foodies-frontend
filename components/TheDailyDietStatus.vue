@@ -3,54 +3,7 @@
     <VCol cols="12" md="8">
       <VCard class="mb-6">
         <VCardTitle> Status postępów</VCardTitle>
-        <VCardText>
-          <VRow>
-            <VCol class="d-flex justify-center">
-              <VProgressCircular
-                :rotate="180"
-                :size="100"
-                :width="15"
-                :value="30"
-                color="pink"
-              >
-                Kalorie
-              </VProgressCircular>
-            </VCol>
-            <VCol class="d-flex justify-center">
-              <VProgressCircular
-                :rotate="180"
-                :size="100"
-                :width="15"
-                :value="30"
-                color="pink"
-              >
-                Białko
-              </VProgressCircular>
-            </VCol>
-            <VCol class="d-flex justify-center">
-              <VProgressCircular
-                :rotate="180"
-                :size="100"
-                :width="15"
-                :value="30"
-                color="pink"
-              >
-                Tłuszcze
-              </VProgressCircular>
-            </VCol>
-            <VCol class="d-flex justify-center">
-              <VProgressCircular
-                :rotate="180"
-                :size="100"
-                :width="15"
-                :value="30"
-                color="pink"
-              >
-                Węglowodany
-              </VProgressCircular>
-            </VCol>
-          </VRow>
-        </VCardText>
+        <VCardText> tutaj kalorie</VCardText>
       </VCard>
     </VCol>
     <VCol cols="12" md="4">
