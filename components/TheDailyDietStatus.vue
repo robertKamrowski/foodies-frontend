@@ -1,40 +1,41 @@
 <template>
-  <VRow class="mb-6">
-    <VCol cols="12" md="8">
+  <VRow>
+    <!--    <VCol cols="12" md="8">-->
+    <VCol cols="12">
       <VCard class="mb-6">
-        <VCardTitle> Status postępów</VCardTitle>
-        <VCardText> tutaj kalorie</VCardText>
-      </VCard>
-    </VCol>
-    <VCol cols="12" md="4">
-      <VCard>
-        <VCardTitle class="mb-2">
-          Plan
-          <VChip color="success" class="ml-2">
-            {{ $auth.user.dietPlan.name }} kcal
-          </VChip>
-        </VCardTitle>
-        <VCardSubtitle>{{ $auth.user.dietPlan.description }}</VCardSubtitle>
-        <VDivider />
-        <VCardTitle> Informacje o dniu</VCardTitle>
+        <VCardTitle> Dzienny status postępów</VCardTitle>
         <VCardText>
-          <div class="mb-4">
-            Liczba posiłków
-            <VChip color="success" class="ml-2" small>
-              {{ $auth.user.dietPlan.dailyMeals }}
-            </VChip>
-          </div>
-          <div>
-            <p class="mb-0">Makroskładniki</p>
-            <ul>
-              <li v-for="[key, value] in dailyMakroArr" :key="key" class="mb-2">
-                {{ makroTranslations[key] }}
-                <VChip class="ml-2" color="green" outlined small>
-                  {{ value }}g
-                </VChip>
-              </li>
-            </ul>
-          </div>
+          <VRow>
+            <VCol cols="12" md="3">
+              <DietPropertyProgress
+                :prop-done="dailyCaloriesEaten"
+                :prop-total="+$auth.user.dietPlan.name"
+                suffix="kcal"
+                heading="Kalorie"
+                bar-color="deep-orange"
+                icon="mdi-numeric"
+              />
+            </VCol>
+            <VCol
+              v-for="{
+                property,
+                heading,
+                barColor,
+                icon
+              } in makroPropertyProgressConfig"
+              :key="property"
+              cols="12"
+              md="3"
+            >
+              <DietPropertyProgress
+                :prop-done="getEatenMakroPropValue(`${property}`)"
+                :prop-total="$auth.user.dietPlan.dailyMakro[property]"
+                :heading="heading"
+                :bar-color="barColor"
+                :icon="icon"
+              />
+            </VCol>
+          </VRow>
         </VCardText>
       </VCard>
     </VCol>
@@ -50,16 +51,44 @@ export default {
       required: true
     }
   },
-  data: () => ({
-    makroTranslations: {
-      fat: 'Tłuszcze',
-      protein: 'Białko',
-      carbohydrates: 'Węglowodany'
+  data() {
+    return {
+      makroPropertyProgressConfig: [
+        {
+          property: 'protein',
+          heading: 'Białko',
+          barColor: 'indigo',
+          icon: 'mdi-egg'
+        },
+        {
+          property: 'fat',
+          heading: 'Tłuszcze',
+          barColor: 'orange',
+          icon: 'mdi-liquid-spot'
+        },
+        {
+          property: 'carbohydrates',
+          heading: 'Węglowodany',
+          barColor: 'brown',
+          icon: 'mdi-bread-slice'
+        }
+      ]
     }
-  }),
+  },
   computed: {
-    dailyMakroArr() {
-      return Object.entries(this.$auth.user.dietPlan.dailyMakro)
+    dailyCaloriesEaten() {
+      return this.$auth.user.dietSchedule[this.day]
+        .filter((recipe) => recipe.isDone)
+        .map((recipe) => recipe.kcal)
+        .reduce((acc, value) => acc + value, 0)
+    }
+  },
+  methods: {
+    getEatenMakroPropValue(property) {
+      return this.$auth.user.dietSchedule[this.day]
+        .filter((recipe) => recipe.isDone)
+        .map((recipe) => recipe.makro[property])
+        .reduce((acc, value) => acc + value, 0)
     }
   }
 }

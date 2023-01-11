@@ -1,15 +1,21 @@
 <template>
   <VCard>
     <!--  Tabs -->
-    <VTabs v-model="tab" center-active centered color="success" show-arrows>
-      <VTab v-for="({ name }, index) in items" :key="`${name}-${index}`">
+    <VTabs
+      v-model="tabValue"
+      center-active
+      centered
+      color="success"
+      show-arrows
+    >
+      <VTab v-for="({ name }, index) in tabs" :key="`${name}-${index}`">
         {{ name }}
       </VTab>
     </VTabs>
-    <TheRecipesDialogWithActivatorBtn :day="activeDay" />
+    <TheRecipesDialogWithActivatorBtn :day="day" />
     <!--  Tabs content -->
-    <VTabsItems v-model="tab">
-      <VTabItem v-for="{ content } in items" :key="content">
+    <VTabsItems v-model="tabValue">
+      <VTabItem v-for="{ content } in tabs" :key="content">
         <VSheet class="px-6 py-4">
           <VRow>
             <VCol
@@ -40,27 +46,29 @@
 <script>
 export default {
   name: 'TheDayScheduleTabs',
-  data: () => ({
-    activeDay: 'monday',
-    tab: null,
-    items: [
-      { name: 'Niedziela', content: 'sunday' },
-      { name: 'Poniedziałek', content: 'monday' },
-      { name: 'Wtorek', content: 'tuesday' },
-      { name: 'Środa', content: 'wednesday' },
-      { name: 'Czwartek', content: 'thursday' },
-      { name: 'Piątek', content: 'friday' },
-      { name: 'Sobota', content: 'saturday' }
-    ]
-  }),
-  watch: {
-    tab(currentValue) {
-      this.activeDay = this.items[currentValue].content
-      this.$emit('day-change', this.activeDay)
+  props: {
+    value: {
+      type: Number,
+      required: true
+    },
+    tabs: {
+      type: Array,
+      required: true
+    },
+    day: {
+      type: String,
+      required: true
     }
   },
-  created() {
-    this.tab = new Date().getDay()
+  computed: {
+    tabValue: {
+      get() {
+        return this.value
+      },
+      set(value) {
+        this.$emit('input', value)
+      }
+    }
   }
 }
 </script>
