@@ -1,6 +1,8 @@
 import colors from 'vuetify/es5/util/colors'
 
+const { NODE_ENV, API_URL_DEV, API_URL_PROD } = process.env
 export default {
+  target: 'static',
   head: {
     titleTemplate: '%s - foodies-frontend',
     title: 'Foodies',
@@ -21,7 +23,16 @@ export default {
   buildModules: ['@nuxt/typescript-build', '@nuxtjs/vuetify'],
   modules: ['@nuxtjs/axios', '@nuxtjs/auth-next'],
   axios: {
-    baseURL: 'http://localhost:5000/api/'
+    headers: {
+      common: {
+        Accept: 'application/json'
+      }
+    }
+  },
+  publicRuntimeConfig: {
+    axios: {
+      baseURL: NODE_ENV === 'production' ? API_URL_PROD : API_URL_DEV
+    }
   },
   auth: {
     redirect: {
