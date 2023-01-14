@@ -17,7 +17,7 @@
     <VTabsItems v-model="tabValue">
       <VTabItem v-for="{ content } in tabs" :key="content">
         <VSheet class="px-6 py-4">
-          <VRow v-if="dailyScheduleRecipes(content).length">
+          <VRow v-show="dailyScheduleRecipes(content).length">
             <VCol
               v-for="{
                 _id,
@@ -43,7 +43,7 @@
               />
             </VCol>
           </VRow>
-          <NoRecipeChosen v-else />
+          <NoRecipeChosen v-show="!dailyScheduleRecipes(content).length" />
         </VSheet>
       </VTabItem>
     </VTabsItems>
