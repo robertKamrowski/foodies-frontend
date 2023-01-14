@@ -18,7 +18,7 @@
       </h2>
 
       <h3>
-        Dodaj przepisy klikąć w powyższy
+        Dodaj przepisy klikając w powyższy
         <span class="success--text">zielony</span> przycisk
         <VIcon class="green--text">mdi-button-pointer</VIcon>
       </h3>
