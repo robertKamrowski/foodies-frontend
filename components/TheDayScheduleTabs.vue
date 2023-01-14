@@ -17,10 +17,15 @@
     <VTabsItems v-model="tabValue">
       <VTabItem v-for="{ content } in tabs" :key="content">
         <VSheet class="px-6 py-4">
-          <VRow>
+          <VRow v-if="dailyScheduleRecipes(content).length">
             <VCol
-              v-for="{ _id, ingredients, makro, steps, title } in $auth.user
-                .dietSchedule[content]"
+              v-for="{
+                _id,
+                ingredients,
+                makro,
+                steps,
+                title
+              } in dailyScheduleRecipes(content)"
               :key="_id"
               cols="12"
               lg="4"
@@ -37,6 +42,7 @@
               />
             </VCol>
           </VRow>
+          <NoRecipeChosen v-else />
         </VSheet>
       </VTabItem>
     </VTabsItems>
@@ -68,6 +74,11 @@ export default {
       set(value) {
         this.$emit('input', value)
       }
+    }
+  },
+  methods: {
+    dailyScheduleRecipes(day) {
+      return this.$auth.user.dietSchedule[day]
     }
   }
 }
