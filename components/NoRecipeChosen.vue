@@ -4,7 +4,8 @@
       <div class="img-container" />
     </VCol>
     <VCol
-      cols="10"
+      cols="12"
+      sm="8"
       md="6"
       lg="4"
       class="d-flex flex-column justify-center text-center text-lg-right"

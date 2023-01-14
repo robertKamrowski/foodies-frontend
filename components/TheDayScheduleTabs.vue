@@ -28,8 +28,9 @@
               } in dailyScheduleRecipes(content)"
               :key="_id"
               cols="12"
-              lg="4"
               sm="6"
+              lg="4"
+              xl="3"
             >
               <RecipeCard
                 :id="_id"
