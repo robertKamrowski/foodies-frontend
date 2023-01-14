@@ -14,9 +14,12 @@
 </template>
 
 <script>
+import checkIfUserHasDietPlan from '~/middleware/checkIfUserHasDietPlan'
+
 export default {
   name: 'MyPlanPage',
   layout: 'app',
+  middleware: [checkIfUserHasDietPlan],
   data() {
     return {
       pageHeaderConfig: {

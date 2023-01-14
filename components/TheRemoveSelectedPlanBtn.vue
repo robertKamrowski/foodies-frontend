@@ -24,15 +24,10 @@ export default {
   methods: {
     async removeDietPlanFromUser() {
       try {
-        const { message } = await this.$axios.$delete(
-          '/remove-diet-plan',
-          this.$getAuthHeader
-        )
+        await this.$axios.$delete('/remove-diet-plan', this.$getAuthHeader)
         await this.$auth.fetchUser()
-        this.$store.commit('manageAlert', {
-          show: true,
-          type: 'success',
-          text: message
+        await this.$router.push({
+          path: '/all-diets'
         })
       } catch ({ response }) {
         this.$store.commit('manageAlert', {

@@ -4,6 +4,19 @@
       :description="pageHeaderConfig.description"
       :title="pageHeaderConfig.title"
     />
+    <VAlert
+      v-show="!$auth.user.dietPlan"
+      type="info"
+      class="mb-6"
+      transition="scroll-x-transition"
+    >
+      <p>
+        Do Twojego konta nie został przypisany jeszcze żaden plan dietetyczny.
+      </p>
+      Wybierz jeden z poniższych i dostosuj go do Siebie w zakładce "Mój plan".
+      Jeżeli nie wiesz jaką kaloryczność wybrać - przejdź do zakładki
+      "Kalkulator kalorii"
+    </VAlert>
     <VRow>
       <VCol
         v-for="plan in allPlans"
