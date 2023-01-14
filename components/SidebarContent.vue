@@ -10,11 +10,6 @@
         </VListItemContent>
       </VListItem>
     </VList>
-    <div>
-      <VBtn class="mr-4" color="error" outlined block @click="handleLogout">
-        Wyloguj
-      </VBtn>
-    </div>
   </div>
 </template>
 
@@ -49,12 +44,7 @@ export default {
         icon: 'mdi-lightbulb-on'
       }
     ]
-  }),
-  methods: {
-    async handleLogout() {
-      await this.$auth.logout()
-    }
-  }
+  })
 }
 </script>
 

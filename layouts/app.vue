@@ -2,6 +2,9 @@
   <VApp>
     <VAppBar app class="px-6" clipped-left>
       <VSpacer />
+      <VBtn class="mr-4" color="error" outlined @click="handleLogout">
+        Wyloguj
+      </VBtn>
       <VAppBarNavIcon class="d-lg-none" @click="toggleSidebar" />
     </VAppBar>
     <VNavigationDrawer v-model="sidebarOpen" app clipped class="py-8 px-6">
@@ -53,6 +56,9 @@ export default {
     },
     onSnackbarHide() {
       this.$store.commit('closeSnackbar')
+    },
+    async handleLogout() {
+      await this.$auth.logout()
     }
   }
 }
