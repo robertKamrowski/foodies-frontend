@@ -4,6 +4,11 @@
       :title="pageHeaderConfig.title"
       :description="pageHeaderConfig.description"
     />
+    <VRow>
+      <VCol cols="12" md="6" xl="4">
+        <TheCalculator />
+      </VCol>
+    </VRow>
   </VContainer>
 </template>
 
@@ -14,7 +19,8 @@ export default {
   data: () => ({
     pageHeaderConfig: {
       title: 'Kalkulator kalorii',
-      description: 'Poznaj kalkulator kalorii'
+      description:
+        'Uzupełnij pola w kalkulatorze zapotrzebowania kalorycznego i sprawdź ile kalorii musisz zjeść by osiągnąć swój cel!'
     }
   })
 }

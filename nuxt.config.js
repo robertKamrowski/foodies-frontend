@@ -64,6 +64,12 @@ export default {
     }
   },
   vuetify: {
+    treeShake: true,
+    defaultAssets: {
+      font: {
+        family: 'Inter'
+      }
+    },
     customVariables: ['~/assets/variables.scss'],
     theme: {
       dark: false,
