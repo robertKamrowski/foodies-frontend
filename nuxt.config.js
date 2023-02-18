@@ -4,7 +4,6 @@ const { NODE_ENV, API_URL_DEV, API_URL_PROD } = process.env
 export default {
   target: 'static',
   head: {
-    titleTemplate: '%s - foodies-frontend',
     title: 'Foodies',
     htmlAttrs: {
       lang: 'en'
@@ -16,6 +15,10 @@ export default {
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+  },
+  pageTransition: {
+    name: 'page',
+    mode: 'out-in'
   },
   css: ['~/assets/scss/main.scss'],
   plugins: [],
