@@ -6,7 +6,10 @@
     />
     <VRow>
       <VCol cols="12" md="6" xl="4">
-        <TheCalculator />
+        <TheCalculator @calculate="onCalculate" />
+      </VCol>
+      <VCol cols="12" md="6" xl="4">
+        <TheCalculatorInfoPanel :calories="calories" />
       </VCol>
     </VRow>
   </VContainer>
@@ -21,8 +24,14 @@ export default {
       title: 'Kalkulator kalorii',
       description:
         'Uzupełnij pola w kalkulatorze zapotrzebowania kalorycznego i sprawdź ile kalorii musisz zjeść by osiągnąć swój cel!'
+    },
+    calories: 0
+  }),
+  methods: {
+    onCalculate(valid, calories) {
+      valid && (this.calories = calories)
     }
-  })
+  }
 }
 </script>
 

@@ -146,14 +146,18 @@ export default {
             : this.handleWoman(userData)
         this.$emit('calculate', valid, calories)
       } else {
-        this.$emit('calculate', valid, null)
+        this.$emit('calculate', valid, 0)
       }
     },
     handleMan({ weight, height, age, activity, goal }) {
-      return 66 + 13.7 * weight + 5 * height - 6.8 * age + activity + goal
+      return Math.floor(
+        66 + 13.7 * weight + 5 * height - 6.8 * age + activity + goal
+      )
     },
     handleWoman({ weight, height, age, activity, goal }) {
-      return 655 + 9.6 * weight + 1.8 * height - 4.7 * age + activity + goal
+      return Math.floor(
+        655 + 9.6 * weight + 1.8 * height - 4.7 * age + activity + goal
+      )
     }
   }
 }
