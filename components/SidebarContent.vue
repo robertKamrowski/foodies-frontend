@@ -1,12 +1,20 @@
 <template>
   <div class="d-flex flex-column justify-space-between fill-height">
     <VList nav>
-      <VListItem v-for="{ text, to, icon } in links" :key="text" :to="to" nuxt>
-        <VListItemIcon>
-          <VIcon v-text="icon" />
+      <VListItem
+        v-for="{ text, to, icon, iconColor } in links"
+        :key="text"
+        :to="to"
+      >
+        <VListItemIcon class="mr-4">
+          <VIcon :color="iconColor">
+            {{ icon }}
+          </VIcon>
         </VListItemIcon>
         <VListItemContent>
-          <VListItemTitle v-text="text" />
+          <VListItemTitle class="font-weight-medium">
+            {{ text }}
+          </VListItemTitle>
         </VListItemContent>
       </VListItem>
     </VList>
@@ -21,27 +29,32 @@ export default {
       {
         text: 'Mój plan',
         to: '/',
-        icon: 'mdi-calendar'
+        icon: 'mdi-calendar',
+        iconColor: 'indigo'
       },
       {
         text: 'Kalkulator kalorii',
         to: '/calculator',
-        icon: 'mdi-calculator'
+        icon: 'mdi-calculator',
+        iconColor: 'red'
       },
       {
         text: 'Lista zakupów',
         to: '/shopping-list',
-        icon: 'mdi-basket'
+        icon: 'mdi-basket',
+        iconColor: 'brown'
       },
       {
         text: 'Wszystkie diety',
         to: '/all-diets',
-        icon: 'mdi-food-apple-outline'
+        icon: 'mdi-food-apple-outline',
+        iconColor: 'green'
       },
       {
         text: 'Porady',
         to: '/tips',
-        icon: 'mdi-lightbulb-on'
+        icon: 'mdi-lightbulb-on',
+        iconColor: 'amber'
       }
     ]
   })
