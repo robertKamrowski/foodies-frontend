@@ -18,8 +18,8 @@
         text
       >
         <template #close>
-          <VBtn icon outlined color="grey" @click="$store.commit('closeAlert')">
-            <VIcon>mdi-close</VIcon>
+          <VBtn icon outlined color="red" @click="$store.commit('closeAlert')">
+            <VIcon color="red">mdi-close</VIcon>
           </VBtn>
         </template>
         {{ alert.text }}
