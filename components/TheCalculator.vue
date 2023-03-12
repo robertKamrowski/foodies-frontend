@@ -1,91 +1,101 @@
 <template>
-  <VCard rounded>
-    <VCardTitle>
-      Oblicz swoje zapotrzebowanie kaloryczne
-      <VIcon class="ml-2 success--text d-inline-block">mdi-nutrition</VIcon>
-    </VCardTitle>
-    <VCardSubtitle class="mb-3">
-      Podaj swoje dane i wybierz dietę dopasowaną do
-      <b>Ciebie</b> !
-    </VCardSubtitle>
-    <VCardText class="pb-0">
-      <VForm
-        id="calc-form"
-        ref="calc-form"
-        v-model="calcData.valid"
-        @submit.prevent="onCalc"
-      >
-        <VTextField
-          v-model="calcData.age"
-          label="Podaj swój wiek"
-          outlined
-          color="success"
-          dense
-          type="number"
-          suffix="lat"
-          hint="Podaj swój wiek w latach"
-          :rules="[rules.required]"
-        />
-        <VTextField
-          v-model="calcData.height"
-          label="Podaj swój wzrost"
-          outlined
-          color="success"
-          dense
-          type="number"
-          suffix="cm"
-          hint="Podaj swój wzrost w centymetrach"
-          :rules="[rules.required]"
-        />
-        <VTextField
-          v-model="calcData.weight"
-          label="Podaj swoją wagę"
-          outlined
-          color="success"
-          dense
-          type="number"
-          suffix="kg"
-          hint="Podaj swoją wagę w kilogramach"
-          :rules="[rules.required]"
-        />
-        <VRadioGroup
-          v-model="calcData.gender"
-          label="Wybierz płeć"
-          class="mt-0"
+  <div>
+    <VCard rounded>
+      <VCardTitle>
+        Oblicz swoje zapotrzebowanie kaloryczne
+        <VIcon class="ml-2 success--text d-inline-block">mdi-nutrition</VIcon>
+      </VCardTitle>
+      <VCardSubtitle class="mb-3">
+        Podaj swoje dane i wybierz dietę dopasowaną do
+        <b>Ciebie</b> !
+      </VCardSubtitle>
+      <VCardText class="pb-0">
+        <VForm
+          id="calc-form"
+          ref="calc-form"
+          v-model="calcData.valid"
+          @submit.prevent="onCalc"
         >
-          <VRadio value="female" label="Kobieta" color="success" />
-          <VRadio value="male" label="Mężczyzna" color="success" />
-        </VRadioGroup>
-        <VSelect
-          v-model="calcData.activity"
-          :items="activities"
-          outlined
-          dense
-          color="success"
-          item-text="label"
-          item-value="value"
-          label="Wybierz poziom aktywności"
-          persistent-hint
-          item-color="success"
-        />
-        <VSelect
-          v-model="calcData.goal"
-          :items="goals"
-          outlined
-          dense
-          color="success"
-          item-text="label"
-          item-value="value"
-          label="Wybierz swój cel"
-          persistent-hint
-          item-color="success"
-        />
-      </VForm>
-    </VCardText>
-    <VCardActions>
-      <VBtn form="calc-form" type="submit" block color="success"> Oblicz</VBtn>
-    </VCardActions>
-  </VCard>
+          <VRow>
+            <VCol cols="12" md="6">
+              <VTextField
+                v-model="calcData.age"
+                label="Podaj swój wiek"
+                outlined
+                color="success"
+                dense
+                type="number"
+                suffix="lat"
+                hint="Podaj swój wiek w latach"
+                :rules="[rules.required, rules.maxAge]"
+              />
+              <VTextField
+                v-model="calcData.height"
+                label="Podaj swój wzrost"
+                outlined
+                color="success"
+                dense
+                type="number"
+                suffix="cm"
+                hint="Podaj swój wzrost w centymetrach"
+                :rules="[rules.required, rules.maxHeight]"
+              />
+              <VTextField
+                v-model="calcData.weight"
+                label="Podaj swoją wagę"
+                outlined
+                color="success"
+                dense
+                type="number"
+                suffix="kg"
+                hint="Podaj swoją wagę w kilogramach"
+                :rules="[rules.required, rules.maxWeight]"
+              />
+            </VCol>
+            <VCol cols="12" md="6">
+              <VSelect
+                v-model="calcData.activity"
+                :items="activities"
+                outlined
+                dense
+                color="success"
+                item-text="label"
+                item-value="value"
+                label="Wybierz poziom aktywności"
+                persistent-hint
+                item-color="success"
+              />
+              <VSelect
+                v-model="calcData.goal"
+                :items="goals"
+                outlined
+                dense
+                color="success"
+                item-text="label"
+                item-value="value"
+                label="Wybierz swój cel"
+                persistent-hint
+                item-color="success"
+              />
+              <VRadioGroup
+                v-model="calcData.gender"
+                label="Wybierz płeć"
+                row
+                class="mt-0"
+              >
+                <VRadio value="female" label="Kobieta" color="success" />
+                <VRadio value="male" label="Mężczyzna" color="success" />
+              </VRadioGroup>
+            </VCol>
+          </VRow>
+        </VForm>
+      </VCardText>
+      <VCardActions>
+        <VBtn form="calc-form" type="submit" block color="success">Oblicz</VBtn>
+      </VCardActions>
+    </VCard>
+    <TheCalculatorResult v-model="modelDialog" :calories="calories" />
+  </div>
 </template>
 
 <script>
@@ -93,6 +103,8 @@ export default {
   name: 'TheCalculator',
   data() {
     return {
+      modelDialog: false,
+      calories: 0,
       calcData: {
         valid: false,
         age: null,
@@ -119,7 +131,7 @@ export default {
       goals: [
         {
           label: 'Chcę zrzucić kilka kilogramów',
-          value: -300
+          value: -100
         },
         {
           label: 'Chcę utrzymać wagę',
@@ -131,7 +143,13 @@ export default {
         }
       ],
       rules: {
-        required: (value) => !!value || 'Pole jest wymagane!'
+        required: (value) => !!value || 'Pole jest wymagane!',
+        maxAge: (value) =>
+          value <= 100 || 'Wiek musi być mniejszy niż 100 lat!',
+        maxHeight: (value) =>
+          value <= 220 || 'Wzrost musi być mniejszy niż 220cm!',
+        maxWeight: (value) =>
+          value <= 300 || 'Waga musi być mniejsza niż 300kg!'
       }
     }
   },
@@ -140,13 +158,11 @@ export default {
       await this.$refs['calc-form'].validate()
       const { gender, valid, ...userData } = this.calcData
       if (valid) {
-        const calories =
+        this.calories =
           gender === 'male'
             ? this.handleMan(userData)
             : this.handleWoman(userData)
-        this.$emit('calculate', valid, calories)
-      } else {
-        this.$emit('calculate', valid, 0)
+        this.modelDialog = true
       }
     },
     handleMan({ weight, height, age, activity, goal }) {
