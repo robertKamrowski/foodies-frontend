@@ -11,29 +11,37 @@
       <SidebarContent />
     </VNavigationDrawer>
     <VMain class="mt-4 mx-4 mx-lg-8">
-      <VAlert
-        v-show="alert.show"
-        :type="alert.type"
-        transition="scroll-x-transition"
-        text
-      >
-        <template #close>
-          <VBtn icon outlined color="red" @click="$store.commit('closeAlert')">
-            <VIcon color="red">mdi-close</VIcon>
-          </VBtn>
-        </template>
-        {{ alert.text }}
-      </VAlert>
-      <VSnackbar
-        :value="snackbar.show"
-        :color="snackbar.type"
-        top
-        :timeout="2000"
-        @input="onSnackbarHide"
-      >
-        {{ snackbar.text }}
-      </VSnackbar>
-      <Nuxt />
+      <VContainer>
+        <VAlert
+          v-show="alert.show"
+          :type="alert.type"
+          transition="scroll-x-transition"
+          text
+          class="font-weight-medium"
+        >
+          <template #close>
+            <VBtn
+              icon
+              outlined
+              color="red"
+              @click="$store.commit('closeAlert')"
+            >
+              <VIcon color="red">mdi-close</VIcon>
+            </VBtn>
+          </template>
+          {{ alert.text }}
+        </VAlert>
+        <VSnackbar
+          :value="snackbar.show"
+          :color="snackbar.type"
+          top
+          :timeout="2000"
+          @input="onSnackbarHide"
+        >
+          {{ snackbar.text }}
+        </VSnackbar>
+        <Nuxt />
+      </VContainer>
     </VMain>
   </VApp>
 </template>

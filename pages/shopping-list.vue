@@ -1,10 +1,10 @@
 <template>
-  <VContainer>
+  <div>
     <PageHeader
       :title="pageHeaderConfig.title"
       :description="pageHeaderConfig.description"
     />
-  </VContainer>
+  </div>
 </template>
 
 <script>

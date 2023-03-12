@@ -1,11 +1,11 @@
 <template>
-  <VContainer>
+  <div>
     <PageHeader
       :title="pageHeaderConfig.title"
       :description="pageHeaderConfig.description"
     />
     <TheCalculator />
-  </VContainer>
+  </div>
 </template>
 
 <script>

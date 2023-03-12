@@ -1,5 +1,5 @@
 <template>
-  <VContainer>
+  <div>
     <PageHeader
       :description="pageHeaderConfig.description"
       :title="pageHeaderConfig.title"
@@ -10,7 +10,7 @@
       <TheDailyDietStatus :day="activeDay" />
       <TheDayScheduleTabs v-model="tab" :day="activeDay" :tabs="tabs" />
     </template>
-  </VContainer>
+  </div>
 </template>
 
 <script>

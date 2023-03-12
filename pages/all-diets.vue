@@ -1,5 +1,5 @@
 <template>
-  <VContainer>
+  <div>
     <PageHeader
       :description="pageHeaderConfig.description"
       :title="pageHeaderConfig.title"
@@ -10,12 +10,13 @@
       class="mb-6"
       transition="scroll-x-transition"
     >
-      <p>
-        Do Twojego konta nie został przypisany jeszcze żaden plan dietetyczny.
-      </p>
-      Wybierz jeden z poniższych i dostosuj go do Siebie w zakładce "Mój plan".
-      Jeżeli nie wiesz jaką kaloryczność wybrać - przejdź do zakładki
-      "Kalkulator kalorii"
+      <div class="font-weight-medium">
+        <p>
+          Do Twojego konta nie został przypisany jeszcze żaden plan dietetyczny.
+        </p>
+        Jeżeli nie wiesz jaką kaloryczność wybrać - przejdź do
+        <VBtn to="/calculator" nuxt outlined small> Kalkulator kalorii </VBtn>
+      </div>
     </VAlert>
     <VRow>
       <VCol
@@ -29,7 +30,7 @@
         <DietCard v-bind="plan" />
       </VCol>
     </VRow>
-  </VContainer>
+  </div>
 </template>
 
 <script>
@@ -56,7 +57,8 @@ export default {
   data: () => ({
     pageHeaderConfig: {
       title: 'Wszystkie diety',
-      description: 'Wybieraj dowolne posiłki z diety'
+      description:
+        'Wybierz elastyczną dietę dostosowaną specjalnie dla Ciebie !'
     }
   })
 }
