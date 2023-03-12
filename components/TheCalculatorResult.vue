@@ -18,7 +18,7 @@
       </v-card-text>
       <v-card-actions>
         <v-btn to="/all-diets" nuxt outlined block color="green">
-          Przejdź do wybory diety
+          Przejdź do wyboru diety
         </v-btn>
       </v-card-actions>
     </v-card>

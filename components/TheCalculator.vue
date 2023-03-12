@@ -1,6 +1,6 @@
 <template>
   <div>
-    <VCard rounded>
+    <VCard rounded :loading="cardLoading">
       <VCardTitle>
         Oblicz swoje zapotrzebowanie kaloryczne
         <VIcon class="ml-2 success--text d-inline-block">mdi-nutrition</VIcon>
@@ -13,7 +13,7 @@
         <VForm
           id="calc-form"
           ref="calc-form"
-          v-model="calcData.valid"
+          v-model="valid"
           @submit.prevent="onCalc"
         >
           <VRow>
@@ -27,7 +27,7 @@
                 type="number"
                 suffix="lat"
                 hint="Podaj swój wiek w latach"
-                :rules="[rules.required, rules.maxAge]"
+                :rules="[rules.required, rules.minAge, rules.maxAge]"
               />
               <VTextField
                 v-model="calcData.height"
@@ -38,7 +38,7 @@
                 type="number"
                 suffix="cm"
                 hint="Podaj swój wzrost w centymetrach"
-                :rules="[rules.required, rules.maxHeight]"
+                :rules="[rules.required, rules.minHeight, rules.maxHeight]"
               />
               <VTextField
                 v-model="calcData.weight"
@@ -49,7 +49,7 @@
                 type="number"
                 suffix="kg"
                 hint="Podaj swoją wagę w kilogramach"
-                :rules="[rules.required, rules.maxWeight]"
+                :rules="[rules.required, rules.minWeight, rules.maxWeight]"
               />
             </VCol>
             <VCol cols="12" md="6">
@@ -105,75 +105,107 @@ export default {
     return {
       modelDialog: false,
       calories: 0,
+      valid: false,
+      cardLoading: false,
       calcData: {
-        valid: false,
         age: null,
         height: null,
         weight: null,
         gender: 'female',
-        activity: 0,
-        goal: 0
+        activity: 'level_1',
+        goal: 'maintain weight'
       },
       activities: [
         {
-          label: 'Siedziący tryb życia',
-          value: 0
+          label: 'Siedziący tryb życia, brak aktywności fizycznej',
+          value: 'level_1'
         },
         {
-          label: 'Aktywny - sport 1-2 razy w tygodniu',
-          value: 250
+          label: 'Ćwiczenia 1-3 razy w tygodniu',
+          value: 'level_2'
         },
         {
-          label: 'Bardzo aktywny - sport 3-5 razy w tygodniu',
-          value: 500
+          label: 'Ćwiczenia 4-5 razy w tygodniu',
+          value: 'level_3'
+        },
+        {
+          label:
+            'Codzienne ćwiczenia lub intensywny trening 3-4 razy w tygodniu',
+          value: 'level_4'
+        },
+        {
+          label: 'Intensywny trening 6-7 razy w tygodniu',
+          value: 'level_5'
+        },
+        {
+          label: 'Bardzo intensywny trening codziennie lub praca fizyczna',
+          value: 'level_6'
         }
       ],
       goals: [
         {
           label: 'Chcę zrzucić kilka kilogramów',
-          value: -100
+          value: 'Mild weight loss'
         },
         {
           label: 'Chcę utrzymać wagę',
-          value: 0
+          value: 'maintain weight'
         },
         {
           label: 'Chcę przybrać na wadze',
-          value: 300
+          value: 'Mild weight gain'
         }
       ],
       rules: {
         required: (value) => !!value || 'Pole jest wymagane!',
-        maxAge: (value) =>
-          value <= 100 || 'Wiek musi być mniejszy niż 100 lat!',
+        minAge: (value) => value > 0 || 'Wiek musi być większy niż 0!',
+        maxAge: (value) => value <= 80 || 'Wiek musi być mniejszy niż 80 lat!',
+        minHeight: (value) =>
+          value >= 130 || 'Wzrost musi być większy niż 130cm!',
         maxHeight: (value) =>
-          value <= 220 || 'Wzrost musi być mniejszy niż 220cm!',
+          value <= 230 || 'Wzrost musi być mniejszy niż 230cm!',
         maxWeight: (value) =>
-          value <= 300 || 'Waga musi być mniejsza niż 300kg!'
+          value <= 160 || 'Waga musi być mniejsza niż 160kg!',
+        minWeight: (value) => value >= 40 || 'Waga musi być większa niż 40kg!'
       }
     }
   },
   methods: {
     async onCalc() {
       await this.$refs['calc-form'].validate()
-      const { gender, valid, ...userData } = this.calcData
-      if (valid) {
-        this.calories =
-          gender === 'male'
-            ? this.handleMan(userData)
-            : this.handleWoman(userData)
-        this.modelDialog = true
+      if (this.valid) {
+        const { age, gender, height, weight, activity, goal } = this.calcData
+        const apiUrl = `https://fitness-calculator.p.rapidapi.com/dailycalorie?age=${age}&gender=${gender}&height=${height}&weight=${weight}&activitylevel=${activity}`
+
+        try {
+          this.cardLoading = true
+          const {
+            data: { goals }
+          } = await this.$axios.$get(apiUrl, {
+            headers: {
+              'X-RapidAPI-Host': 'fitness-calculator.p.rapidapi.com',
+              'X-RapidAPI-Key':
+                'c3c964c672mshd8561e6c06988cbp1e33d2jsnfbfa83ca4e4f'
+            }
+          })
+          this.calories = this.roundValue(
+            goal === 'maintain weight' ? goals[goal] : goals[goal].calory
+          )
+          this.cardLoading = false
+          this.modelDialog = true
+        } catch (e) {
+          this.$store.commit('manageAlert', {
+            show: true,
+            type: 'error',
+            text: 'Wystąpił nieoczekiwany błąd podczas obliczania zapotrzebowania, spróbuj ponownie później'
+          })
+          this.cardLoading = false
+          this.modelDialog = false
+        }
       }
     },
-    handleMan({ weight, height, age, activity, goal }) {
-      return Math.floor(
-        66 + 13.7 * weight + 5 * height - 6.8 * age + activity + goal
-      )
-    },
-    handleWoman({ weight, height, age, activity, goal }) {
-      return Math.floor(
-        655 + 9.6 * weight + 1.8 * height - 4.7 * age + activity + goal
-      )
+    roundValue(value) {
+      return Math.round(value)
     }
   }
 }
