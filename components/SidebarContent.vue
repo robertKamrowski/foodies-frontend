@@ -39,22 +39,10 @@ export default {
         iconColor: 'red'
       },
       {
-        text: 'Lista zakupów',
-        to: '/shopping-list',
-        icon: 'mdi-basket',
-        iconColor: 'brown'
-      },
-      {
         text: 'Wszystkie diety',
         to: '/all-diets',
         icon: 'mdi-food-apple-outline',
         iconColor: 'green'
-      },
-      {
-        text: 'Porady',
-        to: '/tips',
-        icon: 'mdi-lightbulb-on',
-        iconColor: 'amber'
       }
     ]
   })
