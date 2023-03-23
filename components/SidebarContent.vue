@@ -43,6 +43,12 @@ export default {
         to: '/all-diets',
         icon: 'mdi-food-apple-outline',
         iconColor: 'green'
+      },
+      {
+        text: 'Progress',
+        to: '/diet-progress',
+        icon: 'mdi-chart-line-variant',
+        iconColor: 'blue'
       }
     ]
   })
