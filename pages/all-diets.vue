@@ -27,7 +27,7 @@
         md="4"
         sm="6"
       >
-        <DietCard v-bind="plan" />
+        <AllDietsDietCard v-bind="plan" />
       </VCol>
     </VRow>
   </div>

@@ -1,13 +1,12 @@
 <template>
   <VRow>
-    <!--    <VCol cols="12" md="8">-->
     <VCol cols="12">
       <VCard class="mb-6">
         <VCardTitle> Dzienny status postępów</VCardTitle>
         <VCardText>
           <VRow>
             <VCol cols="12" md="3">
-              <DietPropertyProgress
+              <MyPlanDietPropertyProgress
                 :prop-done="dailyCaloriesEaten"
                 :prop-total="+$auth.user.dietPlan.name"
                 suffix="kcal"
@@ -27,7 +26,7 @@
               cols="12"
               md="3"
             >
-              <DietPropertyProgress
+              <MyPlanDietPropertyProgress
                 :prop-done="getEatenMakroPropValue(`${property}`)"
                 :prop-total="$auth.user.dietPlan.dailyMakro[property]"
                 :heading="heading"
@@ -44,7 +43,7 @@
 
 <script>
 export default {
-  name: 'TheDailyDietStatus',
+  name: 'DailyDietStatus',
   props: {
     day: {
       type: String,

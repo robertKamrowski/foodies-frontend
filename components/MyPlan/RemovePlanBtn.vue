@@ -20,7 +20,7 @@
 
 <script>
 export default {
-  name: 'TheRemoveSelectedPlanBtn',
+  name: 'RemovePlanBtn',
   methods: {
     async removeDietPlanFromUser() {
       try {

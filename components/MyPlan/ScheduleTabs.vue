@@ -12,7 +12,7 @@
         {{ name }}
       </VTab>
     </VTabs>
-    <TheRecipesDialogWithActivatorBtn :day="day" />
+    <MyPlanRecipesDialogWithActivatorBtn :day="day" />
     <!--  Tabs content -->
     <VTabsItems v-model="tabValue">
       <VTabItem v-for="{ content } in tabs" :key="content">
@@ -32,7 +32,7 @@
               lg="4"
               xl="3"
             >
-              <RecipeCard
+              <MyPlanRecipeCard
                 :id="_id"
                 :day="content"
                 :ingredients="ingredients"
@@ -43,7 +43,9 @@
               />
             </VCol>
           </VRow>
-          <NoRecipeChosen v-show="!dailyScheduleRecipes(content).length" />
+          <MyPlanNoRecipeChosen
+            v-show="!dailyScheduleRecipes(content).length"
+          />
         </VSheet>
       </VTabItem>
     </VTabsItems>
@@ -52,7 +54,7 @@
 
 <script>
 export default {
-  name: 'TheDayScheduleTabs',
+  name: 'ScheduleTabs',
   props: {
     value: {
       type: Number,

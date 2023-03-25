@@ -27,7 +27,7 @@
 
 <script>
 export default {
-  name: 'TheCalculatorResult',
+  name: 'ResultDialog',
   props: {
     value: {
       type: Boolean,

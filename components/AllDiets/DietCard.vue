@@ -40,6 +40,7 @@
 export default {
   name: 'DietCard',
   props: {
+    // eslint-disable-next-line vue/prop-name-casing
     _id: {
       type: String,
       required: true

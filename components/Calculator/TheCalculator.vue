@@ -96,7 +96,7 @@
         <VBtn form="calc-form" type="submit" block color="success">Oblicz</VBtn>
       </VCardActions>
     </VCard>
-    <TheCalculatorResult v-model="modelDialog" :calories="calories" />
+    <CalculatorResultDialog v-model="modelDialog" :calories="calories" />
   </div>
 </template>
 

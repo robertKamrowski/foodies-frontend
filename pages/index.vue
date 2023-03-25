@@ -4,11 +4,11 @@
       :description="pageHeaderConfig.description"
       :title="pageHeaderConfig.title"
     >
-      <TheRemoveSelectedPlanBtn v-if="$auth.user.dietPlan" />
+      <MyPlanRemovePlanBtn v-if="$auth.user.dietPlan" />
     </PageHeader>
     <template v-if="$auth.user.dietPlan">
-      <TheDailyDietStatus :day="activeDay" />
-      <TheDayScheduleTabs v-model="tab" :day="activeDay" :tabs="tabs" />
+      <MyPlanDailyDietStatus :day="activeDay" />
+      <MyPlanScheduleTabs v-model="tab" :day="activeDay" :tabs="tabs" />
     </template>
   </div>
 </template>

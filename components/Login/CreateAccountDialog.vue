@@ -52,7 +52,7 @@
 import { mapMutations } from 'vuex'
 
 export default {
-  name: 'TheRegisterDialog',
+  name: 'LoginCreateAccountDialog',
   data() {
     return {
       registerCredentials: {

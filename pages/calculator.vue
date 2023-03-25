@@ -4,7 +4,7 @@
       :title="pageHeaderConfig.title"
       :description="pageHeaderConfig.description"
     />
-    <TheCalculator />
+    <CalculatorTheCalculator />
   </div>
 </template>
 

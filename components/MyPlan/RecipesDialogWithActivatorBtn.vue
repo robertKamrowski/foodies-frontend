@@ -48,7 +48,7 @@
               lg="4"
               sm="6"
             >
-              <RecipeCard
+              <MyPlanRecipeCard
                 :id="_id"
                 :day="day"
                 :ingredients="ingredients"
@@ -68,7 +68,7 @@
 
 <script>
 export default {
-  name: 'TheRecipesDialogWithActivatorBtn',
+  name: 'RecipesDialogWithActivatorBtn',
   props: {
     day: {
       type: String,

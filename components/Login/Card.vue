@@ -44,7 +44,7 @@
 import { mapMutations } from 'vuex'
 
 export default {
-  name: 'TheLoginCard',
+  name: 'LoginCard',
   data() {
     return {
       loginCredentials: {
