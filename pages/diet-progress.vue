@@ -4,7 +4,7 @@
       :title="pageHeaderConfig.title"
       :description="pageHeaderConfig.description"
     />
-    <!-- Progress components there -->
+    <ProgressForm />
   </div>
 </template>
 

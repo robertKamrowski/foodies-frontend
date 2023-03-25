@@ -5,9 +5,11 @@
         Oblicz swoje zapotrzebowanie kaloryczne
         <VIcon class="ml-2 success--text d-inline-block">mdi-nutrition</VIcon>
       </VCardTitle>
-      <VCardSubtitle class="mb-3">
-        Podaj swoje dane i wybierz dietę dopasowaną do
-        <b>Ciebie</b> !
+      <VCardSubtitle>
+        <p>
+          Podaj swoje dane i wybierz dietę dopasowaną do
+          <b>Ciebie</b> !
+        </p>
       </VCardSubtitle>
       <VCardText class="pb-0">
         <VForm
