@@ -21,7 +21,12 @@ export default {
     mode: 'out-in'
   },
   css: ['~/assets/scss/main.scss'],
-  plugins: [],
+  plugins: [
+    {
+      src: '@/plugins/chart.js',
+      mode: 'client'
+    }
+  ],
   components: true,
   buildModules: ['@nuxt/typescript-build', '@nuxtjs/vuetify'],
   modules: ['@nuxtjs/axios', '@nuxtjs/auth-next'],

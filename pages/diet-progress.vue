@@ -4,7 +4,8 @@
       :title="pageHeaderConfig.title"
       :description="pageHeaderConfig.description"
     />
-    <ProgressForm />
+    <ProgressForm class="mb-10" />
+    <ProgressChart />
   </div>
 </template>
 
