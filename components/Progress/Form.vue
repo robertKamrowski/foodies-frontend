@@ -1,5 +1,5 @@
 <template>
-  <v-card rounded>
+  <v-card rounded :loading="loading">
     <v-card-title>
       Sprawdzaj siebie !
       <VIcon class="ml-2 blue--text d-inline-block">
@@ -89,6 +89,7 @@ export default {
   name: 'ProgressForm',
   data() {
     return {
+      loading: false,
       valid: false,
       modal: false,
       progress: {
@@ -107,7 +108,26 @@ export default {
     async onProgressSubmit() {
       await this.$refs['progress-form'].validate()
       if (this.valid) {
-        console.log('form is valid, time to call backend')
+        try {
+          this.loading = true
+          const { message } = await this.$axios.$post(
+            '/progress',
+            this.progress
+          )
+          this.loading = false
+          this.$store.commit('manageSnackbar', {
+            show: true,
+            text: message,
+            type: 'success'
+          })
+        } catch ({ response }) {
+          this.$store.commit('manageSnackbar', {
+            show: true,
+            text: response.data.message,
+            type: 'error'
+          })
+          this.loading = false
+        }
       }
     }
   }
