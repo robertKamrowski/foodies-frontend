@@ -19,8 +19,8 @@
         v-model="valid"
         @submit.prevent="onProgressSubmit"
       >
-        <v-row>
-          <v-col cols="12" md="6" class="pb-0 pb-md-3">
+        <VRow>
+          <VCol cols="12" sm="6">
             <v-text-field
               v-model="progress.weight"
               label="Podaj swoją wagę"
@@ -32,6 +32,8 @@
               hint="Podaj swoją wagę w kilogramach"
               :rules="[rules.required, rules.minWeight, rules.maxWeight]"
             />
+          </VCol>
+          <VCol cols="12" sm="6">
             <v-dialog
               ref="dialog"
               v-model="modal"
@@ -70,19 +72,8 @@
                 </v-btn>
               </v-date-picker>
             </v-dialog>
-          </v-col>
-          <v-col cols="12" md="6" class="pt-0 pt-md-3">
-            <v-textarea
-              v-model="progress.note"
-              label="Opcjonalna notatka"
-              outlined
-              auto-grow
-              rows="3"
-              color="success"
-              hint="W tym miejscu możesz napisać coś dla siebie tak aby np. pamiętać dany dzień w którym dokonano pomiaru. Np. Dzień w którym zjadłem pizze!"
-            />
-          </v-col>
-        </v-row>
+          </VCol>
+        </VRow>
       </v-form>
     </v-card-text>
     <v-card-actions>
@@ -102,8 +93,7 @@ export default {
       modal: false,
       progress: {
         date: new Date().toISOString().split('T')[0],
-        weight: null,
-        note: ''
+        weight: null
       },
       rules: {
         required: (value) => !!value || 'Pole jest wymagane!',
