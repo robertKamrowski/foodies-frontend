@@ -4,8 +4,8 @@
       :title="pageHeaderConfig.title"
       :description="pageHeaderConfig.description"
     />
-    <ProgressForm class="mb-10" />
-    <ProgressChart />
+    <ProgressForm class="mb-10" @fetch-progress="fetchProgress" />
+    <ProgressChart ref="chart" />
   </div>
 </template>
 
@@ -19,7 +19,12 @@ export default {
       description:
         'Monitoruj swoje postępy kiedy masz na to ochotę, wpisując odpowiednie dane !'
     }
-  })
+  }),
+  methods: {
+    async fetchProgress() {
+      await this.$refs.chart.fetchChartData()
+    }
+  }
 }
 </script>
 

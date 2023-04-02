@@ -120,6 +120,7 @@ export default {
             text: message,
             type: 'success'
           })
+          this.$emit('fetch-progress')
         } catch ({ response }) {
           this.$store.commit('manageSnackbar', {
             show: true,

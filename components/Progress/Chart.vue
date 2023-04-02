@@ -14,15 +14,7 @@ export default {
   name: 'ProgressChart',
   data() {
     return {
-      chartData: {
-        labels: ['2023-03-25', '2023-03-25', '2023-03-25', '2023-03-27'],
-        datasets: [
-          {
-            label: 'Waga',
-            data: [90, 89, 92, 64]
-          }
-        ]
-      },
+      chartData: {},
       options: {
         responsive: true,
         maintainAspectRatio: false,
@@ -39,25 +31,24 @@ export default {
             boxPadding: 4
           }
         }
-      },
-
-      mockChartData: [
-        {
-          date: '2023-03-25',
-          weight: 90,
-          note: 'First object note'
-        },
-        {
-          date: '2023-03-25',
-          weight: 90,
-          note: 'First object note'
-        },
-        {
-          date: '2023-03-25',
-          weight: 90,
-          note: 'First object note'
-        }
-      ]
+      }
+    }
+  },
+  async mounted() {
+    await this.fetchChartData()
+  },
+  methods: {
+    async fetchChartData() {
+      try {
+        const { data } = await this.$axios.$get('/progress-chart')
+        this.chartData = data
+      } catch ({ response }) {
+        this.$store.commit('manageSnackbar', {
+          show: true,
+          text: response.data.message,
+          type: 'error'
+        })
+      }
     }
   }
 }
