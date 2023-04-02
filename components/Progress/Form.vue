@@ -66,6 +66,7 @@
                 <v-btn
                   color="success"
                   block
+                  outlined
                   @click="$refs.dialog.save(progress.date)"
                 >
                   Ok
