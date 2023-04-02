@@ -1,6 +1,8 @@
 <template>
   <div class="pb-6">
-    <h2 class="mb-2">Wykres postępów:</h2>
+    <h2 class="mb-2">
+      Wykres postępów <VIcon class="ml-1 blue--text">mdi-rocket-launch</VIcon>
+    </h2>
     <ClientOnly>
       <LineChart :chart-data="chartData" :chart-options="options" />
     </ClientOnly>
