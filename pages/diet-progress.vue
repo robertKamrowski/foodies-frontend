@@ -21,8 +21,8 @@ export default {
     }
   }),
   methods: {
-    async fetchProgress() {
-      await this.$refs.chart.fetchChartData()
+    fetchProgress() {
+      this.$refs.chart.fetchChartData()
     }
   }
 }
