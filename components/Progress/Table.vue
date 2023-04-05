@@ -1,21 +1,27 @@
 <template>
   <VCard>
     <VCardTitle>
-      <h2>
-        Zarządzanie postępami
-        <VIcon class="ml-1 blue--text">mdi-cog</VIcon>
-      </h2>
-      <VSpacer />
-      <VTextField
-        v-model="search"
-        label="Wyszukaj dzień lub wagę"
-        color="success"
-        append-icon="mdi-magnify"
-        outlined
-        single-line
-        hide-details
-        dense
-      />
+      <VRow>
+        <VCol cols="12" sm="6">
+          <h2>
+            Zarządzanie postępami
+            <VIcon class="ml-1 blue--text">mdi-cog</VIcon>
+          </h2>
+        </VCol>
+        <VCol cols="12" sm="6">
+          <VTextField
+            v-model="search"
+            label="Wyszukaj dzień lub wagę"
+            color="success"
+            append-icon="mdi-magnify"
+            clearable
+            outlined
+            single-line
+            hide-details
+            dense
+          />
+        </VCol>
+      </VRow>
     </VCardTitle>
     <VDataTable
       sort-by="date"
@@ -30,7 +36,7 @@
         <VBtn icon color="green">
           <v-icon> mdi-pencil </v-icon>
         </VBtn>
-        <VBtn icon color="red">
+        <VBtn icon color="red" @click="removeProgress(item._id)">
           <v-icon> mdi-delete </v-icon>
         </VBtn>
       </template>
@@ -63,6 +69,25 @@ export default {
         const { data } = await this.$axios.$get('/progress')
         this.progressData = data
         this.loading = false
+      } catch ({ response }) {
+        this.$store.commit('manageSnackbar', {
+          show: true,
+          text: response.data.message,
+          type: 'error'
+        })
+        this.loading = false
+      }
+    },
+    async removeProgress(id) {
+      this.loading = true
+      try {
+        const { message } = await this.$axios.$delete(`/progress/${id}`)
+        this.$store.commit('manageSnackbar', {
+          show: true,
+          text: message,
+          type: 'success'
+        })
+        this.$emit('fetch-progress')
       } catch ({ response }) {
         this.$store.commit('manageSnackbar', {
           show: true,
