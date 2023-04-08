@@ -16,7 +16,7 @@ export default {
   layout: 'app',
   data: () => ({
     pageHeaderConfig: {
-      title: 'Progress',
+      title: 'Progres',
       description:
         'Monitoruj swoje postępy kiedy masz na to ochotę, wpisując odpowiednie dane !'
     }

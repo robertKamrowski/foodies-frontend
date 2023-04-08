@@ -45,7 +45,7 @@ export default {
         iconColor: 'green'
       },
       {
-        text: 'Progress',
+        text: 'Progres',
         to: '/diet-progress',
         icon: 'mdi-chart-line-variant',
         iconColor: 'blue'
