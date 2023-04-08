@@ -31,6 +31,7 @@
       :search="search"
       hide-default-footer
       no-results-text="Brak wyników"
+      no-data-text="Brak danych do wyświetlenia"
     >
       <template #item.actions="{ item }">
         <VBtn icon color="green" @click.stop="editProgress(item)">

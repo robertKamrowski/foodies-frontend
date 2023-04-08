@@ -66,10 +66,9 @@
                 <v-btn
                   color="success"
                   block
-                  outlined
                   @click="$refs.dialog.save(progress.date)"
                 >
-                  Ok
+                  Zapisz
                 </v-btn>
               </v-date-picker>
             </v-dialog>
