@@ -33,7 +33,7 @@
       no-results-text="Brak wyników"
     >
       <template #item.actions="{ item }">
-        <VBtn icon color="green">
+        <VBtn icon color="green" @click.stop="editProgress(item)">
           <v-icon> mdi-pencil </v-icon>
         </VBtn>
         <VBtn icon color="red" @click="removeProgress(item._id)">
@@ -41,6 +41,11 @@
         </VBtn>
       </template>
     </VDataTable>
+    <ProgressEditDialog
+      v-model="editDialog.open"
+      :progress-data="editDialog.data"
+      @fetch-progress="$emit('fetch-progress')"
+    />
   </VCard>
 </template>
 
@@ -56,7 +61,11 @@ export default {
         { text: 'Waga', value: 'weight', sortable: true },
         { text: 'Akcja', value: 'actions', sortable: false }
       ],
-      progressData: []
+      progressData: [],
+      editDialog: {
+        open: false,
+        data: {}
+      }
     }
   },
   async mounted() {
@@ -96,6 +105,10 @@ export default {
         })
         this.loading = false
       }
+    },
+    editProgress(progressData) {
+      this.editDialog.data = progressData
+      this.editDialog.open = true
     }
   }
 }
