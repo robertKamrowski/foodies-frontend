@@ -78,7 +78,13 @@
       </v-form>
     </v-card-text>
     <v-card-actions>
-      <v-btn form="progress-form" type="submit" block color="success">
+      <v-btn
+        form="progress-form"
+        type="submit"
+        block
+        color="success"
+        :disabled="!valid"
+      >
         Zapisz
       </v-btn>
     </v-card-actions>
