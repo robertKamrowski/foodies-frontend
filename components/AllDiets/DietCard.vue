@@ -86,7 +86,9 @@ export default {
       return `/all-diet/thumb_diet_${this.name}.jpg`
     },
     dailyMealsMessage() {
-      return `${this.dailyMeals} posiłki dziennie`
+      return `${this.dailyMeals} ${
+        this.dailyMeals === 5 ? 'posiłków' : 'posiłki'
+      } dziennie`
     }
   },
   methods: {
