@@ -29,9 +29,19 @@
       </ul>
     </VCardText>
     <VCardActions>
-      <VBtn block color="green" outlined @click="assignDietPlanToUser">
-        Wybierz
-      </VBtn>
+      <div class="d-flex flex-column flex-grow-1">
+        <VBtn color="green" outlined class="mb-2" @click="onReviewRecipes">
+          Sprawdź przepisy
+        </VBtn>
+        <VBtn
+          color="green"
+          block
+          class="white--text"
+          @click="assignDietPlanToUser"
+        >
+          Wybierz
+        </VBtn>
+      </div>
     </VCardActions>
   </VCard>
 </template>
@@ -115,6 +125,9 @@ export default {
           text: response.data.message
         })
       }
+    },
+    onReviewRecipes() {
+      this.$emit('onReviewRecipes', this.recipes, this.name)
     }
   }
 }

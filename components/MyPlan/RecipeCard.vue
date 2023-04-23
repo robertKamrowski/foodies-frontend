@@ -31,7 +31,7 @@
       </ol>
     </VCardText>
     <VSpacer />
-    <VCardActions class="px-4">
+    <VCardActions class="px-4" v-if="!presentational">
       <VTooltip top>
         <template #activator="{ on, attrs }">
           <VBtn
@@ -80,8 +80,7 @@ export default {
       default: false
     },
     day: {
-      type: String,
-      required: true
+      type: String
     },
     id: {
       type: String,
@@ -105,6 +104,10 @@ export default {
       validator: (value) => ['add', 'delete'].includes(value)
     },
     cardInDialog: {
+      type: Boolean,
+      default: false
+    },
+    presentational: {
       type: Boolean,
       default: false
     }
@@ -135,7 +138,7 @@ export default {
         : null
     },
     isDisabled() {
-      return this.cardInDialog
+      return this.cardInDialog && !this.presentational
         ? this.$auth.user.dietSchedule[this.day].some(
             (recipe) => recipe._id === this.id
           )
@@ -191,10 +194,6 @@ export default {
 
 <style lang="scss" scoped>
 .recipe-card {
-  &__title {
-    word-break: break-word;
-  }
-
   &__ingredients-list {
     columns: 2;
   }

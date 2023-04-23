@@ -27,9 +27,17 @@
         md="4"
         sm="6"
       >
-        <AllDietsDietCard v-bind="plan" />
+        <AllDietsDietCard
+          v-bind="plan"
+          @onReviewRecipes="handleReviewRecipes"
+        />
       </VCol>
     </VRow>
+    <AllDietsRecipesDialog
+      v-model="recipesDialog.value"
+      :diet-name="recipesDialog.dietName"
+      :recipes="recipesDialog.recipes"
+    />
   </div>
 </template>
 
@@ -59,8 +67,22 @@ export default {
       title: 'Wszystkie diety',
       description:
         'Wybierz elastyczną dietę dostosowaną specjalnie dla Ciebie !'
+    },
+    recipesDialog: {
+      value: false,
+      recipes: [],
+      dietName: ''
     }
-  })
+  }),
+  methods: {
+    handleReviewRecipes(recipes, dietName) {
+      this.recipesDialog = {
+        value: true,
+        recipes,
+        dietName
+      }
+    }
+  }
 }
 </script>
 

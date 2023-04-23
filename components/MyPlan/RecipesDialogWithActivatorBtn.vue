@@ -10,17 +10,12 @@
       Dodaj przepisy do dnia -
       {{ selectedDailyMeals }} / {{ dailyMeals }}
     </VBtn>
-    <VDialog
-      v-model="dialog"
-      max-width="1020"
-      scrollable
-      transition="dialog-bottom-transition"
-    >
+    <VDialog v-model="dialog" max-width="1020" scrollable>
       <VCard>
         <VCardTitle class="mb-2 title">
           <span class="title__text">
-            Wszystkie dostępne przepisy z wybranej diety -
-            {{ selectedDiet('name') }} kcal
+            Wszystkie dostępne przepisy z wybranej diety
+            {{ selectedDiet('name') }} kalorii
           </span>
           <VBtn
             ref="close"
