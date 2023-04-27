@@ -185,9 +185,8 @@ export default {
             data: { goals }
           } = await this.$axios.$get(apiUrl, {
             headers: {
-              'X-RapidAPI-Host': 'fitness-calculator.p.rapidapi.com',
-              'X-RapidAPI-Key':
-                'c3c964c672mshd8561e6c06988cbp1e33d2jsnfbfa83ca4e4f'
+              'X-RapidAPI-Host': this.$config.rapidAPIHost,
+              'X-RapidAPI-Key': this.$config.rapidAPIKey
             }
           })
           this.calories = this.roundValue(

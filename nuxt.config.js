@@ -40,7 +40,9 @@ export default {
   publicRuntimeConfig: {
     axios: {
       baseURL: NODE_ENV === 'production' ? API_URL_PROD : API_URL_DEV
-    }
+    },
+    rapidAPIKey: process.env.RAPD_API_KEY,
+    rapidAPIHost: process.env.RAPD_API_HOST
   },
   auth: {
     redirect: {
