@@ -18,7 +18,7 @@ export default {
         content: '2zvaquYWQ-uOAJfaxoRAPubYNkNwcY6x2JmUIu_TX10'
       }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+    link: [{ rel: 'icon', type: 'image/png', href: '/favicon.png' }]
   },
   pageTransition: {
     name: 'page',
