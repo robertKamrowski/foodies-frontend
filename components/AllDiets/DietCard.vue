@@ -1,22 +1,30 @@
 <template>
-  <VCard class="pb-2">
-    <VImg
-      :src="imgSrc"
-      class="align-end"
-      gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-      height="200"
-    >
-      <VCardTitle class="white--text">
-        {{ dietName }}
-        <VChip class="ml-auto" color="green" small text-color="white">
+  <VCard class="pb-2 d-flex flex-column">
+    <div class="image-wrapper">
+      <img
+        :src="imgSrc"
+        alt="Food background image"
+        class="image-wrapper__img"
+      />
+      <VCardTitle class="image-wrapper__title-wrapper font-weight-bold">
+        <VChip class="white--text" color="orange">
+          {{ dietName }}
+        </VChip>
+        <VChip
+          class="ml-auto font-weight-medium"
+          color="green"
+          small
+          text-color="white"
+        >
           {{ dailyMealsMessage }}
         </VChip>
       </VCardTitle>
-    </VImg>
+    </div>
+    <!--    </VImg>-->
     <VCardSubtitle>
       {{ description }}
     </VCardSubtitle>
-    <VDivider class="mx-4" />
+    <VDivider class="mx-4 mt-auto" />
     <VCardTitle> Makroskładniki na dzień</VCardTitle>
     <VCardText>
       <ul>
@@ -90,7 +98,7 @@ export default {
       return Object.entries(this.dailyMakro)
     },
     dietName() {
-      return `${this.name} kcal`
+      return `${this.name}kcal`
     },
     imgSrc() {
       return `/all-diet/thumb_diet_${this.name}.jpg`
@@ -133,4 +141,21 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.image-wrapper {
+  position: relative;
+
+  &__img {
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  &__title-wrapper {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+}
+</style>

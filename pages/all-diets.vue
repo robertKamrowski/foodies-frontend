@@ -23,9 +23,9 @@
         v-for="plan in allPlans"
         :key="plan.name"
         cols="12"
-        lg="3"
         md="4"
         sm="6"
+        class="d-flex"
       >
         <AllDietsDietCard
           v-bind="plan"
