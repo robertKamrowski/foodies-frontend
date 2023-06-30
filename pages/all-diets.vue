@@ -48,6 +48,7 @@ export default {
   async asyncData({ $axios, $getAuthHeader, store }) {
     try {
       const { data: allPlans } = await $axios.$get('/diet-plan', $getAuthHeader)
+      allPlans.sort((prev, next) => +prev.name - +next.name)
       return {
         allPlans
       }

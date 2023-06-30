@@ -33,7 +33,13 @@
       </VForm>
     </VCardText>
     <VCardActions>
-      <VBtn form="login-form" type="submit" block color="success">
+      <VBtn
+        form="login-form"
+        type="submit"
+        block
+        color="success"
+        :loading="loading"
+      >
         Zaloguj
       </VBtn>
     </VCardActions>
@@ -47,6 +53,7 @@ export default {
   name: 'LoginCard',
   data() {
     return {
+      loading: false,
       loginCredentials: {
         username: '',
         password: ''
@@ -56,16 +63,19 @@ export default {
   methods: {
     ...mapMutations(['manageAlert']),
     async handleLogin() {
+      this.loading = true
       try {
         await this.$auth.loginWith('local', {
           data: this.loginCredentials
         })
+        this.loading = false
       } catch ({ response }) {
         this.manageAlert({
           show: true,
           type: 'error',
           text: response.data.message
         })
+        this.loading = false
       }
     }
   }

@@ -40,7 +40,13 @@
         </VForm>
       </VCardText>
       <VCardActions>
-        <VBtn form="register-form" type="submit" block color="success">
+        <VBtn
+          form="register-form"
+          type="submit"
+          block
+          color="success"
+          :loading="loading"
+        >
           Utwórz i zaloguj
         </VBtn>
       </VCardActions>
@@ -55,6 +61,7 @@ export default {
   name: 'LoginCreateAccountDialog',
   data() {
     return {
+      loading: false,
       registerCredentials: {
         username: '',
         password: ''
@@ -64,17 +71,20 @@ export default {
   methods: {
     ...mapMutations(['manageAlert']),
     async handleRegister() {
+      this.loading = true
       try {
         await this.$axios.$post('/auth/register', this.registerCredentials)
         await this.$auth.loginWith('local', {
           data: this.registerCredentials
         })
+        this.loading = false
       } catch ({ response }) {
         this.manageAlert({
           show: true,
           type: 'error',
           text: response.data.message
         })
+        this.loading = false
       }
     }
   }
